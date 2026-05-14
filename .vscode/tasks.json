@@ -6,9 +6,10 @@
             "type": "shell",
             "command": "gcc",
             "args": [
-                "main.c",
+                "src/*.c",
+                "-Iinclude",
                 "-o",
-                "main",
+                "bin/jogo",
                 "-lraylib",
                 "-lGL",
                 "-lm",
@@ -17,6 +18,14 @@
                 "-lrt",
                 "-lX11"
             ],
+            "options": {
+                "shell": {
+                    "executable": "/bin/bash",
+                    "args": [
+                        "-c"
+                    ]
+                }
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true

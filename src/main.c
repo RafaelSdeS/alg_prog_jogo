@@ -1,29 +1,21 @@
 #include <raylib.h>
+#include "menu.h"
 
-int main(void)
-{
-    // Configurações da janela
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+int main() {
 
-    InitWindow(screenWidth, screenHeight, "Primeiro teste Raylib");
+    InitWindow(800, 600, "Teste");
 
-    // FPS do jogo
-    SetTargetFPS(60);
+    while (!WindowShouldClose()) {
 
-    // Loop principal
-    while (!WindowShouldClose())
-    {
         BeginDrawing();
 
-        ClearBackground(WHITE);
+        ClearBackground(BLACK);
 
-        DrawText("Raylib funcionando!", 250, 280, 30, DARKBLUE);
+        DrawMenu();
 
         EndDrawing();
     }
 
-    // Finalização
     CloseWindow();
 
     return 0;
