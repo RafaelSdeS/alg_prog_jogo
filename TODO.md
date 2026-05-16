@@ -5,17 +5,17 @@
 - [ X ] Configurar compilação no VS Code
 - [ X ] Criar estrutura de pastas
 - [ X ] Criar README
-- [ ] Criar janela inicial funcionando
+- [ X ] Criar janela inicial funcionando
 
 ---
 
 ## 2. Mecânicas Básicas
-- [ ] Criar plataforma
-- [ ] Implementar movimento da plataforma
-- [ ] Criar bola
-- [ ] Implementar movimento da bola
-- [ ] Implementar colisão com paredes
-- [ ] Implementar colisão com plataforma
+- [ X ] Criar plataforma
+- [ X ] Implementar movimento da plataforma
+- [ X ] Criar bola
+- [ X ] Implementar movimento da bola
+- [ X ] Implementar colisão com paredes
+- [ X ] Implementar colisão com plataforma
 
 ---
 
@@ -43,7 +43,7 @@
 - [ ] Detectar perda da bola
 - [ ] Reiniciar bola e plataforma
 - [ ] Implementar score
-- [ ] Mostrar HUD
+- [ ] Mostrar:
   - [ ] Score
   - [ ] Vidas
   - [ ] Fase atual
@@ -64,10 +64,10 @@
 ---
 
 ## 7. Menus e Telas
-- [ ] Criar menu inicial
+- [ X ] Criar menu inicial
 - [ ] Criar tela de game over
 - [ ] Criar tela de vitória
-- [ ] Implementar navegação no menu
+- [ X ] Implementar navegação no menu
 
 ### Opções do menu
 - [ ] Novo jogo
@@ -102,3 +102,4 @@
 - [ ] Efeitos sonoros
 - [ ] Música
 - [ ] Transições entre fases
+- [ ]  Light e Dark Modes

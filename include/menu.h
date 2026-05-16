@@ -2,5 +2,6 @@
 #define MENU_H
 
 void DrawMenu();
+void UpdateMenu();
 
 #endif
