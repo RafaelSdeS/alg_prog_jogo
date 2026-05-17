@@ -1,5 +1,6 @@
-#include "game.h"
 #include <raylib.h>
+#include "game.h"
+#include "level.h"
 
 // Bola
 float ballX;
@@ -18,6 +19,9 @@ float paddleWidth;
 float paddleHeight;
 
 float paddleSpeed;
+
+// Matriz do nível
+char level[ROWS][COLS];
 
 void InitGame() {
 
@@ -38,6 +42,9 @@ void InitGame() {
     paddleY = 550;
 
     paddleSpeed = 7;
+
+    // Carregar nível
+    LoadLevel(level, "fases/fase1.txt");
 }
 
 void UpdateGame() {
@@ -127,4 +134,6 @@ void DrawGame() {
         paddleHeight,
         WHITE
     );
+
+    DrawLevel(level);
 }

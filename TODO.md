@@ -95,6 +95,8 @@
 - [ ] Vida extra
 - [ ] Bola lenta / rápida
 - [ ] Tijolos especiais
+- [ ] Modo multiplayer
+- [ ] Modo Versus (Multiplayer)
 
 ## Interface
 - [ ] Tela de pause
