@@ -20,6 +20,8 @@
 ---
 
 ## 3. Sistema de Tijolos
+Felipe
+
 - [ ] Criar matriz de tijolos
 - [ ] Ler fases de arquivo `.txt`
 - [ ] Renderizar tijolos
@@ -31,6 +33,8 @@
 ---
 
 ## 4. Sistema de Fases
+Rafael
+
 - [ ] Criar pelo menos 3 fases
 - [ ] Detectar fim da fase
 - [ ] Carregar próxima fase
@@ -39,6 +43,8 @@
 ---
 
 ## 5. Sistema de Vidas e Score
+Rafael
+
 - [ ] Implementar sistema de vidas
 - [ ] Detectar perda da bola
 - [ ] Reiniciar bola e plataforma
@@ -51,12 +57,16 @@
 ---
 
 ## 6. Power-ups
+Felipe
+
 - [ ] Criar estrutura de power-up
 - [ ] Sortear power-ups aleatoriamente
 - [ ] Fazer power-up cair na tela
 - [ ] Detectar captura pela plataforma
 
 ### Obrigatórios
+Felipe
+
 - [ ] Expansão da plataforma
 - [ ] Bola de fogo
 - [ ] Bolas extras
@@ -70,6 +80,8 @@
 - [ X ] Implementar navegação no menu
 
 ### Opções do menu
+Rafael
+
 - [ ] Novo jogo
 - [ ] Carregar jogo
 - [ ] Ranking
@@ -78,6 +90,8 @@
 ---
 
 ## 8. Salvamento
+Rafael
+
 - [ ] Salvar jogo em arquivo binário
 - [ ] Carregar save
 - [ ] Salvar ranking em arquivo texto
