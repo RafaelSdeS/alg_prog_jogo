@@ -1,6 +1,6 @@
 #include <raylib.h>
-#include "game.h"
-#include "level.h"
+#include "..\include\game.h"
+#include "..\include\level.h"
 
 // Bola
 float ballX;
@@ -63,6 +63,67 @@ void UpdateGame() {
     if (ballY <= ballRadius) {
 
         ballSpeedY *= -1;
+    }
+
+    //colisão com tijolos
+    for (int row = 0; row < ROWS; row++) {
+
+        for (int col = 0; col < COLS; col++) {
+
+            char brick = level[row][col];
+
+            if (brick == '1' || brick == '2' || brick == '3' || brick == 'X') {
+
+                int brickX = col * 30;
+                int brickY = row * 20 + 50;
+
+                if (
+                    CheckCollisionCircleRec(
+                        (Vector2){ballX, ballY},
+                        ballRadius,
+                        (Rectangle){
+                            brickX,
+                            brickY,
+                            30,
+                            20
+                        }
+                    )
+                ) {
+                    if (brick =='1')
+                    {
+                        //remove o tijolo
+                        level[row][col] = '0';
+                    }
+                    if (brick =='2')
+                    {
+                        //diminui em 1 a resistencia do tijolo
+                        level[row][col] = '1';
+                    }
+                    if (brick =='3')
+                    {
+                        //diminui em 1 a resistencia do tijolo
+                        level[row][col] = '2';
+                    }
+                    if (brick =='X')
+                    {
+                        //remove o tijolo
+                        level[row][col] = 'X';
+                    }
+                    // colisão com tijolo no eixo y
+                    if(
+                        ballX > brickX &&
+                        ballX < brickX + 30
+                    ) {
+                        ballSpeedY *= -1;
+                    }
+                    // colisão com tijolo no eixo x
+                    else {
+                        ballSpeedX *= -1;
+                    }
+                    
+                }
+            }
+        }
     }
 
     // Movimento plataforma

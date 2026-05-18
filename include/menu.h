@@ -2,6 +2,6 @@
 #define MENU_H
 
 void DrawMenu();
-void UpdateMenu();
+void UpdateMenu(int *currentScreen);
 
 #endif

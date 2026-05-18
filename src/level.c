@@ -1,4 +1,4 @@
-#include "level.h"
+#include "..\include\level.h"
 #include <stdio.h>
 #include <raylib.h>
 
@@ -74,6 +74,16 @@ void DrawLevel(char level[ROWS][COLS]) {
                     ORANGE
                 );
             }
+            if (brick == '3') {
+
+                DrawRectangle(
+                    x,
+                    y,
+                    brickWidth,
+                    brickHeight,
+                    RED 
+                );
+            }
 
             // Tijolo indestrutível
             if (brick == 'X') {
@@ -83,7 +93,7 @@ void DrawLevel(char level[ROWS][COLS]) {
                     y,
                     brickWidth,
                     brickHeight,
-                    GRAY
+                    BLUE
                 );
             }
         }

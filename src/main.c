@@ -1,6 +1,6 @@
 #include <raylib.h>
-#include "menu.h"
-#include "game.h"
+#include "..\include\menu.h"
+#include "..\include\game.h"
 
 #define MENU 0
 #define GAME 1
