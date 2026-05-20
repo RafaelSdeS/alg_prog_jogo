@@ -1,6 +1,6 @@
 #include <raylib.h>
-#include "..\include\game.h"
-#include "..\include\level.h"
+#include "game.h"
+#include "level.h"
 
 // Bola
 float ballX;

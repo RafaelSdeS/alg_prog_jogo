@@ -6,14 +6,18 @@ O jogo é inspirado no jogo Breakout, utilizando a biblioteca Raylib em C.
 
 ## Compilação
 
+Da root do projeto, rode o seguinte comando para criar o arquivo executável:
+
 ```bash
-gcc main.c -o main -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+gcc src/*.c -Iinclude -o bin/jogo -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 ```
 
 ## Execução
 
+Da root do projeto, rode o seguinte comando:
+
 ```bash
-./main
+./bin/jogo
 ```
 
 ## Requisitos
