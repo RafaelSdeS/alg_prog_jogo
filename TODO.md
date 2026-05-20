@@ -75,17 +75,17 @@ Felipe
 
 ## 7. Menus e Telas
 - [ X ] Criar menu inicial
-- [ ] Criar tela de game over
+- [ X ] Criar tela de game over
 - [ ] Criar tela de vitória
 - [ X ] Implementar navegação no menu
 
 ### Opções do menu
 Rafael
 
-- [ ] Novo jogo
+- [ X ] Novo jogo
 - [ ] Carregar jogo
 - [ ] Ranking
-- [ ] Sair
+- [ X ] Sair
 
 ---
 

@@ -2,6 +2,10 @@
 #include "game.h"
 #include "level.h"
 
+#define MENU 0
+#define GAME 1
+#define GAMEOVER 2
+
 // Bola
 float ballX;
 float ballY;
@@ -65,7 +69,7 @@ void InitGame() {
     LoadLevel(level, "fases/fase1.txt");
 }
 
-void UpdateGame() {
+void UpdateGame(int *currentScreen) {
 
     // Movimento da bola
     ballX += ballSpeedX;
@@ -235,7 +239,7 @@ void UpdateGame() {
     if (lives <= 0) {
 
         // Reinicia o jogo
-        InitGame();
+        *currentScreen = GAMEOVER;
     }
 }
 
