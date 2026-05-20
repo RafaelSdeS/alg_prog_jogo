@@ -20,28 +20,46 @@ float paddleHeight;
 
 float paddleSpeed;
 
+// Sistema do jogo
+int lives;
+int score;
+int currentLevel;
+
 // Matriz do nível
 char level[ROWS][COLS];
 
-void InitGame() {
+void ResetBallAndPaddle() {
 
     // Bola
     ballX = 400;
     ballY = 300;
 
-    ballRadius = 10;
-
     ballSpeedX = 5;
     ballSpeedY = -5;
+
+    // Plataforma
+    paddleX = 350;
+    paddleY = 550;
+}
+
+void InitGame() {
+
+    // Sistema do jogo
+    lives = 3;
+    score = 0;
+    currentLevel = 1;
+
+    // Bola
+    ballRadius = 10;
 
     // Plataforma
     paddleWidth = 100;
     paddleHeight = 20;
 
-    paddleX = 350;
-    paddleY = 550;
-
     paddleSpeed = 7;
+
+    // Reinicia bola e plataforma
+    ResetBallAndPaddle();
 
     // Carregar nível
     LoadLevel(level, "fases/fase1.txt");
@@ -65,7 +83,7 @@ void UpdateGame() {
         ballSpeedY *= -1;
     }
 
-    //colisão com tijolos
+    // colisão com tijolos
     for (int row = 0; row < ROWS; row++) {
 
         for (int col = 0; col < COLS; col++) {
@@ -89,38 +107,76 @@ void UpdateGame() {
                         }
                     )
                 ) {
-                    if (brick =='1')
+
+                    if (brick == '1')
                     {
-                        //remove o tijolo
+                        // remove o tijolo
                         level[row][col] = '0';
+
+                        // adiciona score
+                        score += 100;
                     }
-                    if (brick =='2')
+
+                    if (brick == '2')
                     {
-                        //diminui em 1 a resistencia do tijolo
+                        // diminui em 1 a resistencia do tijolo
                         level[row][col] = '1';
+
+                        // adiciona score
+                        score += 50;
                     }
-                    if (brick =='3')
+
+                    if (brick == '3')
                     {
-                        //diminui em 1 a resistencia do tijolo
+                        // diminui em 1 a resistencia do tijolo
                         level[row][col] = '2';
+
+                        // adiciona score
+                        score += 25;
                     }
-                    if (brick =='X')
+
+                    if (brick == 'X')
                     {
-                        //remove o tijolo
+                        // mantém o tijolo
                         level[row][col] = 'X';
                     }
+
                     // colisão com tijolo no eixo y
-                    if(
+                    if (
                         ballX > brickX &&
                         ballX < brickX + 30
                     ) {
+
                         ballSpeedY *= -1;
+
+                        // reposiciona a bola fora do tijolo
+
+                        if (ballSpeedY > 0) {
+                            ballY = brickY + 20 + ballRadius;
+                        }
+
+                        else {
+                            ballY = brickY - ballRadius;
+                        }
                     }
+
                     // colisão com tijolo no eixo x
                     else {
+
                         ballSpeedX *= -1;
+
+                        // reposiciona a bola fora do tijolo
+
+                        if (ballSpeedX > 0) {
+                            ballX = brickX + 30 + ballRadius;
+                        }
+
+                        else {
+                            ballX = brickX - ballRadius;
+                        }
                     }
-                    
+
+                    return;
                 }
             }
         }
@@ -168,16 +224,49 @@ void UpdateGame() {
     // Bola caiu para fora da tela
     if (ballY > 600) {
 
-        // Reinicia posição da bola
-        ballX = 400;
-        ballY = 300;
+        // Perde uma vida
+        lives--;
 
-        ballSpeedX = 5;
-        ballSpeedY = -5;
+        // Reinicia bola e plataforma
+        ResetBallAndPaddle();
+    }
+
+    // Fim de jogo
+    if (lives <= 0) {
+
+        // Reinicia o jogo
+        InitGame();
     }
 }
 
 void DrawGame() {
+
+    // HUD
+    DrawText(
+        TextFormat("Lives: %d", lives),
+        20,
+        10,
+        20,
+        WHITE
+    );
+
+    DrawText(
+        TextFormat("Score: %d", score),
+        200,
+        10,
+        20,
+        WHITE
+    );
+
+    DrawText(
+        TextFormat("Level: %d", currentLevel),
+        400,
+        10,
+        20,
+        WHITE
+    );
+
+    DrawLevel(level);
 
     // Bola
     DrawCircle(
@@ -195,6 +284,4 @@ void DrawGame() {
         paddleHeight,
         WHITE
     );
-
-    DrawLevel(level);
 }

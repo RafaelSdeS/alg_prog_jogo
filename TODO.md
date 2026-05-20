@@ -22,13 +22,13 @@
 ## 3. Sistema de Tijolos
 Felipe
 
-- [ ] Criar matriz de tijolos
-- [ ] Ler fases de arquivo `.txt`
-- [ ] Renderizar tijolos
-- [ ] Implementar colisão bola ↔ tijolo
-- [ ] Implementar destruição dos tijolos
-- [ ] Implementar resistência dos tijolos
-- [ ] Implementar tijolos indestrutíveis
+- [ X ] Criar matriz de tijolos
+- [ X ] Ler fases de arquivo `.txt`
+- [ X ] Renderizar tijolos
+- [ X ] Implementar colisão bola ↔ tijolo
+- [ X ] Implementar destruição dos tijolos
+- [ X ] Implementar resistência dos tijolos
+- [ X ] Implementar tijolos indestrutíveis
 
 ---
 
@@ -45,14 +45,14 @@ Rafael
 ## 5. Sistema de Vidas e Score
 Rafael
 
-- [ ] Implementar sistema de vidas
-- [ ] Detectar perda da bola
-- [ ] Reiniciar bola e plataforma
-- [ ] Implementar score
-- [ ] Mostrar:
-  - [ ] Score
-  - [ ] Vidas
-  - [ ] Fase atual
+- [ X ] Implementar sistema de vidas
+- [ X ] Detectar perda da bola
+- [ X ] Reiniciar bola e plataforma
+- [ X ] Implementar score
+- [ X ] Mostrar:
+  - [ X ] Score
+  - [ X ] Vidas
+  - [ X ] Fase atual
 
 ---
 
