@@ -29,7 +29,7 @@ void UpdateMenu(int *currentScreen) {
     if (IsKeyPressed(KEY_ENTER)) {
 
         if (selectedOption == 0) {
-            InitGame();
+            InitGame(currentScreen);
             *currentScreen = GAME;
     }
 

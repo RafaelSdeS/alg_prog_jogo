@@ -5,6 +5,7 @@
 #define MENU 0
 #define GAME 1
 #define GAMEOVER 2
+#define WINSCREEN 3
 
 // Bola
 float ballX;
@@ -46,7 +47,47 @@ void ResetBallAndPaddle() {
     paddleY = 550;
 }
 
-void InitGame() {
+void LoadCurrentLevel(int *currentScreen) {
+
+    if (currentLevel == 1) {
+        LoadLevel(level, "fases/fase1.txt");
+    }
+
+    else if (currentLevel == 2) {
+        LoadLevel(level, "fases/fase2.txt");
+    }
+
+    else if (currentLevel == 3) {
+        LoadLevel(level, "fases/fase3.txt");
+    }
+
+    else {
+
+        *currentScreen = WINSCREEN;
+    }
+}
+
+int LevelCompleted() {
+
+    for (int row = 0; row < ROWS; row++) {
+
+        for (int col = 0; col < COLS; col++) {
+
+            if (
+                level[row][col] == '1' ||
+                level[row][col] == '2' ||
+                level[row][col] == '3'
+            ) {
+
+                return 0;
+            }
+        }
+    }
+
+    return 1;
+}
+
+void InitGame(int *currentScreen) {
 
     // Sistema do jogo
     lives = 3;
@@ -66,7 +107,7 @@ void InitGame() {
     ResetBallAndPaddle();
 
     // Carregar nível
-    LoadLevel(level, "fases/fase1.txt");
+    LoadCurrentLevel(currentScreen);
 }
 
 void UpdateGame(int *currentScreen) {
@@ -241,6 +282,15 @@ void UpdateGame(int *currentScreen) {
         // Reinicia o jogo
         *currentScreen = GAMEOVER;
     }
+
+    if (LevelCompleted()) {
+
+    currentLevel++;
+
+    ResetBallAndPaddle();
+
+    LoadCurrentLevel(currentScreen);
+}
 }
 
 void DrawGame() {

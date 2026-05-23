@@ -5,6 +5,7 @@
 #define MENU 0
 #define GAME 1
 #define GAMEOVER 2
+#define WINSCREEN 3
 
 int main() {
 
@@ -35,7 +36,15 @@ int main() {
 
             if (IsKeyPressed(KEY_ENTER)) {
 
-                InitGame();
+                InitGame(&currentScreen);
+
+                currentScreen = MENU;
+            }
+        }
+
+        if (currentScreen == WINSCREEN) {
+
+            if (IsKeyPressed(KEY_ENTER)) {
 
                 currentScreen = MENU;
             }
@@ -61,6 +70,32 @@ int main() {
                 200,
                 60,
                 RED
+            );
+
+            DrawText(
+                TextFormat("FINAL SCORE: %d", score),
+                220,
+                300,
+                30,
+                WHITE
+            );
+
+            DrawText(
+                "Press ENTER to return",
+                220,
+                400,
+                30,
+                GRAY
+            );
+        }
+
+        if (currentScreen == WINSCREEN){
+                DrawText(
+                "YOU WON!",
+                220,
+                200,
+                60,
+                YELLOW
             );
 
             DrawText(

@@ -35,10 +35,10 @@ Felipe
 ## 4. Sistema de Fases
 Rafael
 
-- [ ] Criar pelo menos 3 fases
-- [ ] Detectar fim da fase
-- [ ] Carregar próxima fase
-- [ ] Criar tela de vitória
+- [ X ] Criar pelo menos 3 fases
+- [ X ] Detectar fim da fase
+- [ X ] Carregar próxima fase
+- [ X ] Criar tela de vitória
 
 ---
 
@@ -76,7 +76,7 @@ Felipe
 ## 7. Menus e Telas
 - [ X ] Criar menu inicial
 - [ X ] Criar tela de game over
-- [ ] Criar tela de vitória
+- [ X ] Criar tela de vitória
 - [ X ] Implementar navegação no menu
 
 ### Opções do menu
