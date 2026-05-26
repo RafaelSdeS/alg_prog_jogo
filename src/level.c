@@ -17,6 +17,7 @@ void LoadLevel(char level[ROWS][COLS], char *filename) {
 
     char c;
 
+    // Preencher a matriz do nível com os tijolos
     while ((c = fgetc(file)) != EOF && row < ROWS) {
 
         // Ignora quebra de linha
@@ -47,7 +48,8 @@ void DrawLevel(char level[ROWS][COLS]) {
         for (int col = 0; col < COLS; col++) {
 
             char brick = level[row][col];
-
+            
+            // Desenhar os tijolos na tela de acordo com a sua posição na matriz
             int x = col * brickWidth;
             int y = row * brickHeight + 50;
 
@@ -74,6 +76,8 @@ void DrawLevel(char level[ROWS][COLS]) {
                     ORANGE
                 );
             }
+
+            // Tijolo tipo 3
             if (brick == '3') {
 
                 DrawRectangle(

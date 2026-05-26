@@ -9,6 +9,7 @@
 
 int main() {
 
+    // Inicializações do RayLib
     InitWindow(800, 600, "Brick Breaker");
 
     SetExitKey(KEY_NULL);
@@ -24,16 +25,20 @@ int main() {
             UpdateMenu(&currentScreen);
         }
 
+        // Selecionar para começar o jogo
         if (currentScreen == GAME) {
             UpdateGame(&currentScreen);;
 
+            // ESC volta para o menu
             if (IsKeyPressed(KEY_ESCAPE)) {
                 currentScreen = MENU;
             }
         }
 
+        // Tela de gameover
         if (currentScreen == GAMEOVER) {
 
+            // Enter volta ao menu
             if (IsKeyPressed(KEY_ENTER)) {
 
                 InitGame(&currentScreen);
@@ -42,6 +47,7 @@ int main() {
             }
         }
 
+        // Tela de vitória
         if (currentScreen == WINSCREEN) {
 
             if (IsKeyPressed(KEY_ENTER)) {
@@ -50,10 +56,12 @@ int main() {
             }
         }
 
+        // Funções do RayLib
         BeginDrawing();
 
         ClearBackground(BLACK);
 
+        // Desenhar as diferentes telas do jogo
         if (currentScreen == MENU) {
             DrawMenu();
         }

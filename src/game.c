@@ -47,6 +47,7 @@ void ResetBallAndPaddle() {
     paddleY = 550;
 }
 
+// Carregar o nível atual e passar para o próximo. No momento, não é dinâmico
 void LoadCurrentLevel(int *currentScreen) {
 
     if (currentLevel == 1) {
@@ -67,6 +68,7 @@ void LoadCurrentLevel(int *currentScreen) {
     }
 }
 
+// Detecta se o nível está completo (verifica se ainda há tijolos destrutíveis na matriz)
 int LevelCompleted() {
 
     for (int row = 0; row < ROWS; row++) {
@@ -87,6 +89,7 @@ int LevelCompleted() {
     return 1;
 }
 
+// Inicializa o jogo
 void InitGame(int *currentScreen) {
 
     // Sistema do jogo
@@ -110,6 +113,7 @@ void InitGame(int *currentScreen) {
     LoadCurrentLevel(currentScreen);
 }
 
+// Atualiza o jogo
 void UpdateGame(int *currentScreen) {
 
     // Movimento da bola
@@ -194,7 +198,7 @@ void UpdateGame(int *currentScreen) {
 
                         ballSpeedY *= -1;
 
-                        // reposiciona a bola fora do tijolo
+                        // reposiciona a bola fora do tijolo (evitar glitches)
 
                         if (ballSpeedY > 0) {
                             ballY = brickY + 20 + ballRadius;
@@ -210,7 +214,7 @@ void UpdateGame(int *currentScreen) {
 
                         ballSpeedX *= -1;
 
-                        // reposiciona a bola fora do tijolo
+                        // reposiciona a bola fora do tijolo (evitar glitches)
 
                         if (ballSpeedX > 0) {
                             ballX = brickX + 30 + ballRadius;
@@ -283,6 +287,7 @@ void UpdateGame(int *currentScreen) {
         *currentScreen = GAMEOVER;
     }
 
+    // Quando acaba a fase, reinicializa as posições e carrega a nova fase
     if (LevelCompleted()) {
 
     currentLevel++;
@@ -293,6 +298,7 @@ void UpdateGame(int *currentScreen) {
 }
 }
 
+// Lógica de desenho do jogo
 void DrawGame() {
 
     // HUD

@@ -7,7 +7,7 @@
 
 int selectedOption = 0;
 
-// Lógica de seleção do menu
+// Lógica de seleção do menu - Menu "rotaciona" entre as opções
 void UpdateMenu(int *currentScreen) {
 
     if (IsKeyPressed(KEY_DOWN)) {
