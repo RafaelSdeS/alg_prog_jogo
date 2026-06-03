@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "game.h"
 
+// Opções do menu
 #define MENU 0
 #define GAME 1
 

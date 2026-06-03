@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <raylib.h>
 
-// Lógica para carregar o nível
+// Lógica para preencher a matriz que irá gerar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename) {
-
+    int row = 0, col = 0;
+    char c;
     FILE *file = fopen(filename, "r"); // Acessar o arquivo de texto
 
     if (file == NULL) {
@@ -12,15 +13,10 @@ void LoadLevel(char level[ROWS][COLS], char *filename) {
         return;
     }
 
-    int row = 0;
-    int col = 0;
-
-    char c;
-
     // Preencher a matriz do nível com os tijolos
     while ((c = fgetc(file)) != EOF && row < ROWS) {
 
-        // Ignora quebra de linha
+        // Lógica para quebra de linha
         if (c == '\n') {
             row++;
             col = 0;
@@ -44,7 +40,6 @@ void DrawLevel(char level[ROWS][COLS]) {
     int brickHeight = 20;
 
     for (int row = 0; row < ROWS; row++) {
-
         for (int col = 0; col < COLS; col++) {
 
             char brick = level[row][col];
@@ -55,7 +50,6 @@ void DrawLevel(char level[ROWS][COLS]) {
 
             // Tijolo tipo 1
             if (brick == '1') {
-
                 DrawRectangle(
                     x,
                     y,
@@ -67,7 +61,6 @@ void DrawLevel(char level[ROWS][COLS]) {
 
             // Tijolo tipo 2
             if (brick == '2') {
-
                 DrawRectangle(
                     x,
                     y,
@@ -79,7 +72,6 @@ void DrawLevel(char level[ROWS][COLS]) {
 
             // Tijolo tipo 3
             if (brick == '3') {
-
                 DrawRectangle(
                     x,
                     y,
@@ -91,7 +83,6 @@ void DrawLevel(char level[ROWS][COLS]) {
 
             // Tijolo indestrutível
             if (brick == 'X') {
-
                 DrawRectangle(
                     x,
                     y,

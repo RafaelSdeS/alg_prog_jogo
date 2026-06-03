@@ -2,6 +2,7 @@
 #include "game.h"
 #include "level.h"
 
+// Estados do jogo
 #define MENU 0
 #define GAME 1
 #define GAMEOVER 2
@@ -72,11 +73,9 @@ void LoadCurrentLevel(int *currentScreen) {
 int LevelCompleted() {
 
     for (int row = 0; row < ROWS; row++) {
-
         for (int col = 0; col < COLS; col++) {
 
-            if (
-                level[row][col] == '1' ||
+            if (level[row][col] == '1' ||
                 level[row][col] == '2' ||
                 level[row][col] == '3'
             ) {
@@ -134,18 +133,15 @@ void UpdateGame(int *currentScreen) {
 
     // colisão com tijolos
     for (int row = 0; row < ROWS; row++) {
-
         for (int col = 0; col < COLS; col++) {
 
             char brick = level[row][col];
 
             if (brick == '1' || brick == '2' || brick == '3' || brick == 'X') {
-
                 int brickX = col * 30;
                 int brickY = row * 20 + 50;
 
-                if (
-                    CheckCollisionCircleRec(
+                if (CheckCollisionCircleRec(
                         (Vector2){ballX, ballY},
                         ballRadius,
                         (Rectangle){
@@ -157,8 +153,7 @@ void UpdateGame(int *currentScreen) {
                     )
                 ) {
 
-                    if (brick == '1')
-                    {
+                    if (brick == '1') {
                         // remove o tijolo
                         level[row][col] = '0';
 
@@ -166,8 +161,7 @@ void UpdateGame(int *currentScreen) {
                         score += 100;
                     }
 
-                    if (brick == '2')
-                    {
+                    if (brick == '2') {
                         // diminui em 1 a resistencia do tijolo
                         level[row][col] = '1';
 
@@ -175,8 +169,7 @@ void UpdateGame(int *currentScreen) {
                         score += 50;
                     }
 
-                    if (brick == '3')
-                    {
+                    if (brick == '3') {
                         // diminui em 1 a resistencia do tijolo
                         level[row][col] = '2';
 
@@ -184,22 +177,17 @@ void UpdateGame(int *currentScreen) {
                         score += 25;
                     }
 
-                    if (brick == 'X')
-                    {
+                    if (brick == 'X') {
                         // mantém o tijolo
                         level[row][col] = 'X';
                     }
 
                     // colisão com tijolo no eixo y
-                    if (
-                        ballX > brickX &&
-                        ballX < brickX + 30
-                    ) {
+                    if (ballX > brickX && ballX < brickX + 30) {
 
                         ballSpeedY *= -1;
 
                         // reposiciona a bola fora do tijolo (evitar glitches)
-
                         if (ballSpeedY > 0) {
                             ballY = brickY + 20 + ballRadius;
                         }
@@ -215,7 +203,6 @@ void UpdateGame(int *currentScreen) {
                         ballSpeedX *= -1;
 
                         // reposiciona a bola fora do tijolo (evitar glitches)
-
                         if (ballSpeedX > 0) {
                             ballX = brickX + 30 + ballRadius;
                         }
@@ -262,7 +249,6 @@ void UpdateGame(int *currentScreen) {
             }
         )
     ) {
-
         // Faz a bola subir
         ballSpeedY *= -1;
 
@@ -303,7 +289,7 @@ void DrawGame() {
 
     // HUD
     DrawText(
-        TextFormat("Lives: %d", lives),
+        TextFormat("Vidas: %d", lives),
         20,
         10,
         20,
@@ -319,7 +305,7 @@ void DrawGame() {
     );
 
     DrawText(
-        TextFormat("Level: %d", currentLevel),
+        TextFormat("Nível: %d", currentLevel),
         400,
         10,
         20,

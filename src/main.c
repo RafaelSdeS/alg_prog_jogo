@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "game.h"
 
+// Definições para o menu 
 #define MENU 0
 #define GAME 1
 #define GAMEOVER 2
@@ -12,10 +13,12 @@ int main() {
     // Inicializações do RayLib
     InitWindow(800, 600, "Brick Breaker");
 
+    // Não fechar a janela com o ESC
     SetExitKey(KEY_NULL);
 
     SetTargetFPS(60);
 
+     // Inicializar o jogo no menu
     int currentScreen = MENU;
 
     while (!WindowShouldClose()) {
@@ -40,18 +43,13 @@ int main() {
 
             // Enter volta ao menu
             if (IsKeyPressed(KEY_ENTER)) {
-
-                InitGame(&currentScreen);
-
                 currentScreen = MENU;
             }
         }
 
         // Tela de vitória
         if (currentScreen == WINSCREEN) {
-
             if (IsKeyPressed(KEY_ENTER)) {
-
                 currentScreen = MENU;
             }
         }
@@ -81,7 +79,7 @@ int main() {
             );
 
             DrawText(
-                TextFormat("FINAL SCORE: %d", score),
+                TextFormat("SCORE FINAL: %d", score),
                 220,
                 300,
                 30,
@@ -89,7 +87,7 @@ int main() {
             );
 
             DrawText(
-                "Press ENTER to return",
+                "Pressione ENTER",
                 220,
                 400,
                 30,
@@ -107,7 +105,7 @@ int main() {
             );
 
             DrawText(
-                TextFormat("FINAL SCORE: %d", score),
+                TextFormat("SCORE FINAL: %d", score),
                 220,
                 300,
                 30,
@@ -115,7 +113,7 @@ int main() {
             );
 
             DrawText(
-                "Press ENTER to return",
+                "Pressione ENTER",
                 220,
                 400,
                 30,
