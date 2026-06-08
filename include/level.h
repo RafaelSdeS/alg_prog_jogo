@@ -1,8 +1,6 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-
-#define ROWS 15
-#define COLS 25
+#include "config.h"
 
 // Carregar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename);

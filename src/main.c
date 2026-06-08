@@ -1,12 +1,10 @@
 #include <raylib.h>
 #include "menu.h"
 #include "game.h"
+#include "save.h"
+#include <stdio.h>
 
-// Definições para o menu 
-#define MENU 0
-#define GAME 1
-#define GAMEOVER 2
-#define WINSCREEN 3
+#include "game_state.h"
 
 int main() {
 
@@ -18,19 +16,23 @@ int main() {
 
     SetTargetFPS(60);
 
-     // Inicializar o jogo no menu
-    int currentScreen = MENU;
+    // Estado do jogo
+    Game game;
+    GameState currentScreen = MENU;
+
+    // Inicializar o jogo no menu
+    InitGame(&game, &currentScreen);
 
     while (!WindowShouldClose()) {
-        
+
         // Lógica de seleção do menu
         if (currentScreen == MENU) {
-            UpdateMenu(&currentScreen);
+            UpdateMenu(&game, &currentScreen);
         }
 
         // Selecionar para começar o jogo
-        if (currentScreen == GAME) {
-            UpdateGame(&currentScreen);;
+        else if (currentScreen == GAME) {
+            UpdateGame(&game, &currentScreen);
 
             // ESC volta para o menu
             if (IsKeyPressed(KEY_ESCAPE)) {
@@ -39,7 +41,7 @@ int main() {
         }
 
         // Tela de gameover
-        if (currentScreen == GAMEOVER) {
+        else if (currentScreen == GAMEOVER) {
 
             // Enter volta ao menu
             if (IsKeyPressed(KEY_ENTER)) {
@@ -48,10 +50,14 @@ int main() {
         }
 
         // Tela de vitória
-        if (currentScreen == WINSCREEN) {
+        else if (currentScreen == WINSCREEN) {
             if (IsKeyPressed(KEY_ENTER)) {
                 currentScreen = MENU;
             }
+        }
+
+        else if (currentScreen == SELECTSAVE) {
+            UpdateSaveSelection(&game, &currentScreen);
         }
 
         // Funções do RayLib
@@ -65,7 +71,7 @@ int main() {
         }
 
         if (currentScreen == GAME) {
-            DrawGame();
+            DrawGame(&game);
         }
 
         if (currentScreen == GAMEOVER) {
@@ -79,7 +85,7 @@ int main() {
             );
 
             DrawText(
-                TextFormat("SCORE FINAL: %d", score),
+                TextFormat("SCORE FINAL: %d", game.score),
                 220,
                 300,
                 30,
@@ -95,8 +101,9 @@ int main() {
             );
         }
 
-        if (currentScreen == WINSCREEN){
-                DrawText(
+        if (currentScreen == WINSCREEN) {
+
+            DrawText(
                 "YOU WON!",
                 220,
                 200,
@@ -105,7 +112,7 @@ int main() {
             );
 
             DrawText(
-                TextFormat("SCORE FINAL: %d", score),
+                TextFormat("SCORE FINAL: %d", game.score),
                 220,
                 300,
                 30,
@@ -121,6 +128,9 @@ int main() {
             );
         }
 
+        if (currentScreen == SELECTSAVE) {
+            DrawSaveSelection();
+        }
         EndDrawing();
     }
 

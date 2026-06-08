@@ -1,15 +1,15 @@
 #include <raylib.h>
 #include "menu.h"
 #include "game.h"
+#include "save.h"
+#include <stdio.h>
 
-// Opções do menu
-#define MENU 0
-#define GAME 1
+#include "game_state.h"
 
 int selectedOption = 0;
 
 // Lógica de seleção do menu - Menu "rotaciona" entre as opções
-void UpdateMenu(int *currentScreen) {
+void UpdateMenu(Game *game, GameState *currentScreen) {
 
     if (IsKeyPressed(KEY_DOWN)) {
         selectedOption++;
@@ -30,9 +30,15 @@ void UpdateMenu(int *currentScreen) {
     if (IsKeyPressed(KEY_ENTER)) {
 
         if (selectedOption == 0) {
-            InitGame(currentScreen);
+            InitGame(game, currentScreen);
             *currentScreen = GAME;
-    }
+        }
+
+        if (selectedOption == 1) {
+            printf("Entrando em Selecionar Save");
+            RefreshSaveList();
+            *currentScreen = SELECTSAVE;
+        }
 
         if (selectedOption == 3) {
             CloseWindow();

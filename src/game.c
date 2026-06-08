@@ -1,85 +1,39 @@
 #include <raylib.h>
 #include "game.h"
 #include "level.h"
-
-// Estados do jogo
-#define MENU 0
-#define GAME 1
-#define GAMEOVER 2
-#define WINSCREEN 3
-
-// Bola
-float ballX;
-float ballY;
-
-float ballRadius;
-
-float ballSpeedX;
-float ballSpeedY;
-
-// Plataforma
-float paddleX;
-float paddleY;
-
-float paddleWidth;
-float paddleHeight;
-
-float paddleSpeed;
-
-// Sistema do jogo
-int lives;
-int score;
-int currentLevel;
-
-// Matriz do nível
-char level[ROWS][COLS];
-
-void ResetBallAndPaddle() {
-
-    // Bola
-    ballX = 400;
-    ballY = 300;
-
-    ballSpeedX = 5;
-    ballSpeedY = -5;
-
-    // Plataforma
-    paddleX = 350;
-    paddleY = 550;
-}
+#include "save.h"
+#include "game_state.h"
 
 // Carregar o nível atual e passar para o próximo. No momento, não é dinâmico
-void LoadCurrentLevel(int *currentScreen) {
+void LoadCurrentLevel(Game *game, GameState *currentScreen) {
 
-    if (currentLevel == 1) {
-        LoadLevel(level, "fases/fase1.txt");
+    if (game->currentLevel == 1) {
+        LoadLevel(game->level, "fases/fase1.txt");
     }
 
-    else if (currentLevel == 2) {
-        LoadLevel(level, "fases/fase2.txt");
+    else if (game->currentLevel == 2) {
+        LoadLevel(game->level, "fases/fase2.txt");
     }
 
-    else if (currentLevel == 3) {
-        LoadLevel(level, "fases/fase3.txt");
+    else if (game->currentLevel == 3) {
+        LoadLevel(game->level, "fases/fase3.txt");
     }
 
     else {
-
         *currentScreen = WINSCREEN;
     }
 }
 
 // Detecta se o nível está completo (verifica se ainda há tijolos destrutíveis na matriz)
-int LevelCompleted() {
+int LevelCompleted(Game *game) {
 
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLS; col++) {
 
-            if (level[row][col] == '1' ||
-                level[row][col] == '2' ||
-                level[row][col] == '3'
+            if (game->level[row][col] == '1' ||
+                game->level[row][col] == '2' ||
+                game->level[row][col] == '3'
             ) {
-
                 return 0;
             }
         }
@@ -89,126 +43,115 @@ int LevelCompleted() {
 }
 
 // Inicializa o jogo
-void InitGame(int *currentScreen) {
+void InitGame(Game *game, GameState *currentScreen) {
 
     // Sistema do jogo
-    lives = 3;
-    score = 0;
-    currentLevel = 1;
+    game->lives = 3;
+    game->score = 0;
+    game->currentLevel = 1;
 
     // Bola
-    ballRadius = 10;
+    game->ballRadius = 10;
 
     // Plataforma
-    paddleWidth = 100;
-    paddleHeight = 20;
+    game->paddleWidth = 100;
+    game->paddleHeight = 20;
 
-    paddleSpeed = 7;
+    game->paddleSpeed = 7;
 
     // Reinicia bola e plataforma
-    ResetBallAndPaddle();
+    game->ballX = 400;
+    game->ballY = 300;
+
+    game->ballSpeedX = 5;
+    game->ballSpeedY = -5;
+
+    game->paddleX = 350;
+    game->paddleY = 550;
 
     // Carregar nível
-    LoadCurrentLevel(currentScreen);
+    LoadCurrentLevel(game, currentScreen);
 }
 
 // Atualiza o jogo
-void UpdateGame(int *currentScreen) {
+void UpdateGame(Game *game, GameState *currentScreen) {
 
     // Movimento da bola
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+    game->ballX += game->ballSpeedX;
+    game->ballY += game->ballSpeedY;
 
     // Colisão com paredes
-    if (ballX >= 800 - ballRadius ||
-        ballX <= ballRadius) {
+    if (game->ballX >= 800 - game->ballRadius ||
+        game->ballX <= game->ballRadius) {
 
-        ballSpeedX *= -1;
+        game->ballSpeedX *= -1;
     }
 
-    if (ballY <= ballRadius) {
+    if (game->ballY <= game->ballRadius) {
 
-        ballSpeedY *= -1;
+        game->ballSpeedY *= -1;
     }
 
     // colisão com tijolos
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLS; col++) {
 
-            char brick = level[row][col];
+            char brick = game->level[row][col];
 
             if (brick == '1' || brick == '2' || brick == '3' || brick == 'X') {
+
                 int brickX = col * 30;
                 int brickY = row * 20 + 50;
 
                 if (CheckCollisionCircleRec(
-                        (Vector2){ballX, ballY},
-                        ballRadius,
-                        (Rectangle){
-                            brickX,
-                            brickY,
-                            30,
-                            20
-                        }
+                        (Vector2){game->ballX, game->ballY},
+                        game->ballRadius,
+                        (Rectangle){ brickX, brickY, 30, 20 }
                     )
                 ) {
 
                     if (brick == '1') {
-                        // remove o tijolo
-                        level[row][col] = '0';
-
-                        // adiciona score
-                        score += 100;
+                        game->level[row][col] = '0';
+                        game->score += 100;
                     }
 
                     if (brick == '2') {
-                        // diminui em 1 a resistencia do tijolo
-                        level[row][col] = '1';
-
-                        // adiciona score
-                        score += 50;
+                        game->level[row][col] = '1';
+                        game->score += 50;
                     }
 
                     if (brick == '3') {
-                        // diminui em 1 a resistencia do tijolo
-                        level[row][col] = '2';
-
-                        // adiciona score
-                        score += 25;
+                        game->level[row][col] = '2';
+                        game->score += 25;
                     }
 
                     if (brick == 'X') {
-                        // mantém o tijolo
-                        level[row][col] = 'X';
+                        game->level[row][col] = 'X';
                     }
 
                     // colisão com tijolo no eixo y
-                    if (ballX > brickX && ballX < brickX + 30) {
+                    if (game->ballX > brickX && game->ballX < brickX + 30) {
 
-                        ballSpeedY *= -1;
+                        game->ballSpeedY *= -1;
 
                         // reposiciona a bola fora do tijolo (evitar glitches)
-                        if (ballSpeedY > 0) {
-                            ballY = brickY + 20 + ballRadius;
-                        }
-
-                        else {
-                            ballY = brickY - ballRadius;
+                        if (game->ballSpeedY > 0) {
+                            game->ballY = brickY + 20 + game->ballRadius;
+                        } else {
+                            game->ballY = brickY - game->ballRadius;
                         }
                     }
 
                     // colisão com tijolo no eixo x
                     else {
 
-                        ballSpeedX *= -1;
+                        game->ballSpeedX *= -1;
 
                         // reposiciona a bola fora do tijolo (evitar glitches)
-                        if (ballSpeedX > 0) {
-                            ballX = brickX + 30 + ballRadius;
-                        }
-
-                        else {
-                            ballX = brickX - ballRadius;
+                        if (game->ballSpeedX > 0) {
+                            game->ballX = brickX + 30 + game->ballRadius;
+                        } else {
+                            game->ballX = brickX - game->ballRadius;
                         }
                     }
 
@@ -220,76 +163,73 @@ void UpdateGame(int *currentScreen) {
 
     // Movimento plataforma
     if (IsKeyDown(KEY_RIGHT)) {
-        paddleX += paddleSpeed;
+        game->paddleX += game->paddleSpeed;
     }
 
     if (IsKeyDown(KEY_LEFT)) {
-        paddleX -= paddleSpeed;
+        game->paddleX -= game->paddleSpeed;
     }
 
     // Limites da plataforma
-    if (paddleX < 0) {
-        paddleX = 0;
+    if (game->paddleX < 0) {
+        game->paddleX = 0;
     }
 
-    if (paddleX + paddleWidth > 800) {
-        paddleX = 800 - paddleWidth;
+    if (game->paddleX + game->paddleWidth > 800) {
+        game->paddleX = 800 - game->paddleWidth;
     }
 
     // Colisão da bola com a plataforma
     if (
         CheckCollisionCircleRec(
-            (Vector2){ballX, ballY},
-            ballRadius,
+            (Vector2){game->ballX, game->ballY},
+            game->ballRadius,
             (Rectangle){
-                paddleX,
-                paddleY,
-                paddleWidth,
-                paddleHeight
+                game->paddleX,
+                game->paddleY,
+                game->paddleWidth,
+                game->paddleHeight
             }
         )
     ) {
-        // Faz a bola subir
-        ballSpeedY *= -1;
-
-        // Evita que a bola grude na plataforma
-        ballY = paddleY - ballRadius;
+        game->ballSpeedY *= -1;
+        game->ballY = game->paddleY - game->ballRadius;
     }
 
     // Bola caiu para fora da tela
-    if (ballY > 600) {
+    if (game->ballY > 600) {
 
-        // Perde uma vida
-        lives--;
+        game->lives--;
 
-        // Reinicia bola e plataforma
-        ResetBallAndPaddle();
+        game->ballX = 400;
+        game->ballY = 300;
+        game->ballSpeedX = 5;
+        game->ballSpeedY = -5;
     }
 
     // Fim de jogo
-    if (lives <= 0) {
-
-        // Reinicia o jogo
+    if (game->lives <= 0) {
         *currentScreen = GAMEOVER;
     }
 
     // Quando acaba a fase, reinicializa as posições e carrega a nova fase
-    if (LevelCompleted()) {
+    if (LevelCompleted(game)) {
+        game->currentLevel++;
+        LoadCurrentLevel(game, currentScreen);
+    }
 
-    currentLevel++;
-
-    ResetBallAndPaddle();
-
-    LoadCurrentLevel(currentScreen);
-}
+    // Salvar jogo
+    if (IsKeyPressed(KEY_F5)) {
+        SaveGame(game);
+    }
 }
 
 // Lógica de desenho do jogo
-void DrawGame() {
+void DrawGame(Game *game) {
 
     // HUD
     DrawText(
-        TextFormat("Vidas: %d", lives),
+        TextFormat("Vidas: %d", game->lives),
         20,
         10,
         20,
@@ -297,7 +237,7 @@ void DrawGame() {
     );
 
     DrawText(
-        TextFormat("Score: %d", score),
+        TextFormat("Score: %d", game->score),
         200,
         10,
         20,
@@ -305,29 +245,29 @@ void DrawGame() {
     );
 
     DrawText(
-        TextFormat("Nível: %d", currentLevel),
+        TextFormat("Nível: %d", game->currentLevel),
         400,
         10,
         20,
         WHITE
     );
 
-    DrawLevel(level);
+    DrawLevel(game->level);
 
     // Bola
     DrawCircle(
-        ballX,
-        ballY,
-        ballRadius,
+        game->ballX,
+        game->ballY,
+        game->ballRadius,
         WHITE
     );
 
     // Plataforma
     DrawRectangle(
-        paddleX,
-        paddleY,
-        paddleWidth,
-        paddleHeight,
+        game->paddleX,
+        game->paddleY,
+        game->paddleWidth,
+        game->paddleHeight,
         WHITE
     );
 }
