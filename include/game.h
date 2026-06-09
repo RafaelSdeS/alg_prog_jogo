@@ -5,6 +5,7 @@
 #include "game_state.h"
 #include "config.h"
 
+// Struct para salvar os dados atuais do jogo
 typedef struct {
     // Bola
     float ballX, ballY;
@@ -24,6 +25,9 @@ typedef struct {
     // Level
     char level[ROWS][COLS];
 
+    char playerName[50];
+    int playerNameLength;
+
 } Game;
 
 // Inicializar o jogo
@@ -37,5 +41,10 @@ void DrawGame(Game *game);
 
 // Carregar nível atual e passar de fase
 void LoadCurrentLevel(Game *game, GameState *currentScreen);
+
+// Telas finais
+void DrawGameOverScreen(Game *game);
+void DrawWinScreen(Game *game);
+void DrawEnterNameScreen(Game *game);
 
 #endif

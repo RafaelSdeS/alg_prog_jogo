@@ -40,46 +40,30 @@ void UpdateMenu(Game *game, GameState *currentScreen) {
             *currentScreen = SELECTSAVE;
         }
 
+        if (selectedOption == 2) {
+            *currentScreen = RANKING;
+        }
+
         if (selectedOption == 3) {
             CloseWindow();
         }
     }
 }
 
-// Mostrar as opções do menu
+// Desenhar o menu na tela
 void DrawMenu() {
+
+    char options[][20] = {
+        "Novo Jogo",
+        "Carregar Save",
+        "Ranking",
+        "Sair"
+    };
 
     DrawText("MENU", 300, 100, 40, WHITE);
 
-    DrawText(
-        "Novo Jogo",
-        300,
-        200,
-        40,
-        selectedOption == 0 ? YELLOW : WHITE
-    );
-
-    DrawText(
-        "Carregar Save",
-        300,
-        300,
-        40,
-        selectedOption == 1 ? YELLOW : WHITE
-    );
-
-    DrawText(
-        "Ranking",
-        300,
-        400,
-        40,
-        selectedOption == 2 ? YELLOW : WHITE
-    );
-
-    DrawText(
-        "Sair",
-        300,
-        500,
-        40,
-        selectedOption == 3 ? YELLOW : WHITE
-    );
+    // Percorrer as opções do menu de forma que não ocupe muitas linhas de código
+    for (int i = 0; i < 4; i++) {
+        DrawText(options[i], 300, 200 + i * 100, 40, i == selectedOption ? YELLOW : WHITE);
+    }
 }

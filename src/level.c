@@ -4,7 +4,9 @@
 
 // Lógica para preencher a matriz que irá gerar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename) {
-    int row = 0, col = 0;
+
+    int row = 0;
+    int col = 0;
     char c;
     FILE *file = fopen(filename, "r"); // Acessar o arquivo de texto
 
@@ -32,6 +34,17 @@ void LoadLevel(char level[ROWS][COLS], char *filename) {
     fclose(file); // Fechar arquivo
 }
 
+// Retorna a cor do tijolo com base no tipo
+Color GetBrickColor(char brick) {
+
+    if (brick == '1') return GREEN;
+    if (brick == '2') return ORANGE;
+    if (brick == '3') return RED;
+    if (brick == 'X') return BLUE;
+
+    return BLANK;
+}
+
 // Configurações para desenhar os tijolos
 void DrawLevel(char level[ROWS][COLS]) {
 
@@ -43,53 +56,16 @@ void DrawLevel(char level[ROWS][COLS]) {
         for (int col = 0; col < COLS; col++) {
 
             char brick = level[row][col];
-            
+
             // Desenhar os tijolos na tela de acordo com a sua posição na matriz
             int x = col * brickWidth;
             int y = row * brickHeight + 50;
 
-            // Tijolo tipo 1
-            if (brick == '1') {
-                DrawRectangle(
-                    x,
-                    y,
-                    brickWidth,
-                    brickHeight,
-                    GREEN
-                );
-            }
+            // Conseguir a cor do tijolo
+            Color color = GetBrickColor(brick);
 
-            // Tijolo tipo 2
-            if (brick == '2') {
-                DrawRectangle(
-                    x,
-                    y,
-                    brickWidth,
-                    brickHeight,
-                    ORANGE
-                );
-            }
-
-            // Tijolo tipo 3
-            if (brick == '3') {
-                DrawRectangle(
-                    x,
-                    y,
-                    brickWidth,
-                    brickHeight,
-                    RED 
-                );
-            }
-
-            // Tijolo indestrutível
-            if (brick == 'X') {
-                DrawRectangle(
-                    x,
-                    y,
-                    brickWidth,
-                    brickHeight,
-                    BLUE
-                );
+            if (color.a != 0) {
+                DrawRectangle(x, y, brickWidth, brickHeight, color);
             }
         }
     }

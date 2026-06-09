@@ -1,9 +1,11 @@
 #include <raylib.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "menu.h"
 #include "game.h"
 #include "save.h"
-#include <stdio.h>
-
+#include "ranking.h"
 #include "game_state.h"
 
 int main() {
@@ -42,22 +44,84 @@ int main() {
 
         // Tela de gameover
         else if (currentScreen == GAMEOVER) {
-
-            // Enter volta ao menu
             if (IsKeyPressed(KEY_ENTER)) {
-                currentScreen = MENU;
+                if (IsTopScore(game.score)) {
+
+                    game.playerName[0] = '\0';
+                    currentScreen = ENTERNAME;
+
+                } else {
+                    currentScreen = MENU;
+                }
             }
         }
 
         // Tela de vitória
         else if (currentScreen == WINSCREEN) {
             if (IsKeyPressed(KEY_ENTER)) {
+                if (IsTopScore(game.score)) {
+
+                    game.playerName[0] = '\0';
+                    currentScreen = ENTERNAME;
+
+                } else {
+                    currentScreen = MENU;
+                }
+            }
+        }
+
+        // Tela de seleção de saves
+        else if (currentScreen == SELECTSAVE) {
+            UpdateSaveSelection(&game, &currentScreen);
+        }
+
+        // Tela de ranking
+        else if (currentScreen == RANKING) {
+            if (IsKeyPressed(KEY_ESCAPE)) {
                 currentScreen = MENU;
             }
         }
 
-        else if (currentScreen == SELECTSAVE) {
-            UpdateSaveSelection(&game, &currentScreen);
+        // Tela para digitar o nome
+        else if (currentScreen == ENTERNAME) {
+
+            // Lê caracteres digitados no frame atual (buffer de input do Raylib)
+            int key = GetCharPressed();
+
+            // Processa todos os caracteres que foram digitados neste frame
+            while (key > 0) {
+
+                // Aceita apenas caracteres ASCII imprimíveis e limita tamanho do nome
+                if (key >= 32 && key <= 125 && strlen(game.playerName) < 49) {
+
+                    int len = strlen(game.playerName);
+
+                    // Adiciona o caractere no final da string
+                    game.playerName[len] = (char)key;
+                    game.playerName[len + 1] = '\0';
+                }
+
+                // Pega próximo caractere do buffer (caso exista mais de um)
+                key = GetCharPressed();
+            }
+
+            // Remove último caractere (backspace)
+            if (IsKeyPressed(KEY_BACKSPACE)) {
+
+                int len = strlen(game.playerName);
+
+                if (len > 0) {
+                    game.playerName[len - 1] = '\0';
+                }
+            }
+
+            // Confirma o nome e salva no ranking
+            if (IsKeyPressed(KEY_ENTER) && strlen(game.playerName) > 0) {
+
+                UpdateRanking(game.playerName, game.score);
+
+                currentScreen = MENU;
+            }
         }
 
         // Funções do RayLib
@@ -70,67 +134,30 @@ int main() {
             DrawMenu();
         }
 
-        if (currentScreen == GAME) {
+        else if (currentScreen == GAME) {
             DrawGame(&game);
         }
 
-        if (currentScreen == GAMEOVER) {
-
-            DrawText(
-                "GAME OVER",
-                220,
-                200,
-                60,
-                RED
-            );
-
-            DrawText(
-                TextFormat("SCORE FINAL: %d", game.score),
-                220,
-                300,
-                30,
-                WHITE
-            );
-
-            DrawText(
-                "Pressione ENTER",
-                220,
-                400,
-                30,
-                GRAY
-            );
+        else if (currentScreen == GAMEOVER) {
+            DrawGameOverScreen(&game);
         }
 
-        if (currentScreen == WINSCREEN) {
-
-            DrawText(
-                "YOU WON!",
-                220,
-                200,
-                60,
-                YELLOW
-            );
-
-            DrawText(
-                TextFormat("SCORE FINAL: %d", game.score),
-                220,
-                300,
-                30,
-                WHITE
-            );
-
-            DrawText(
-                "Pressione ENTER",
-                220,
-                400,
-                30,
-                GRAY
-            );
+        else if (currentScreen == WINSCREEN) {
+            DrawWinScreen(&game);
         }
 
-        if (currentScreen == SELECTSAVE) {
+        else if (currentScreen == SELECTSAVE) {
             DrawSaveSelection();
         }
+
+        else if (currentScreen == RANKING) {
+            DrawRanking();
+        }
+
+        else if (currentScreen == ENTERNAME) {
+            DrawEnterNameScreen(&game);
+        }
+
         EndDrawing();
     }
 

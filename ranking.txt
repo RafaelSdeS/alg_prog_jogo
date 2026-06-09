@@ -1,0 +1,5 @@
+Rafael2;300
+Rafael;250
+Ana;150
+Isadora;120
+Lucas;100

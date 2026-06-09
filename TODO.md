@@ -83,8 +83,8 @@ Felipe
 Rafael
 
 - [ X ] Novo jogo
-- [ ] Carregar jogo
-- [ ] Ranking
+- [ X ] Carregar jogo
+- [ X ] Ranking
 - [ X ] Sair
 
 ---
@@ -92,10 +92,10 @@ Rafael
 ## 8. Salvamento
 Rafael
 
-- [ ] Salvar jogo em arquivo binário
-- [ ] Carregar save
-- [ ] Salvar ranking em arquivo texto
-- [ ] Implementar TOP 5 scores
+- [ X ] Salvar jogo em arquivo binário
+- [ X ] Carregar save
+- [ X ] Salvar ranking em arquivo texto
+- [ X ] Implementar TOP 5 scores
 
 ---
 
