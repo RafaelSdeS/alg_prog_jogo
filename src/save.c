@@ -11,6 +11,7 @@
 // Número de saves visíveis na tela a qualquer momento (limite da paginação)
 #define VISIBLE_SAVES 6
 
+// Tamanho máximo do nome do save
 char saveFiles[MAX_SAVES][256];
 
 int saveCount = 0;
@@ -146,7 +147,6 @@ void UpdateSaveSelection(Game *game, GameState *currentScreen) {
     }
 
     // Ajustar janela visível da lista
-
     if (selectedSave < firstVisibleSave) {
         firstVisibleSave = selectedSave;
     }

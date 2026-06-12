@@ -4,6 +4,7 @@
 #include "game.h"
 #include "game_state.h"
 
+// Máximo número de saves
 #define MAX_SAVES 20
 
 // Salvar jogo

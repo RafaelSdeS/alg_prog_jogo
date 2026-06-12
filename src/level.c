@@ -5,8 +5,11 @@
 // Lógica para preencher a matriz que irá gerar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename) {
 
+    // Colunas e linhas da matriz de tijolos para criar o nível
     int row = 0;
     int col = 0;
+
+    // Variável char para ler o tipo dos tijolos
     char c;
     FILE *file = fopen(filename, "r"); // Acessar o arquivo de texto
 

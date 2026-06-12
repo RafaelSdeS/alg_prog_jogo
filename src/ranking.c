@@ -4,7 +4,7 @@
 
 #include "ranking.h"
 
-// Carregar ranking do arquivo
+// Carregar ranking do arquivo de texto
 void LoadRanking(RankingEntry ranking[]) {
 
     int i = 0;
@@ -45,6 +45,7 @@ void SaveRanking(RankingEntry ranking[]) {
         return;
     }
 
+    // Recria o arquivo de ranking com os rankins atualizados
     for (int i = 0; i < TOP_SCORES; i++) {
         if (ranking[i].score > 0) {
             fprintf(file, "%s;%d\n", ranking[i].name, ranking[i].score);
@@ -87,7 +88,6 @@ int IsTopScore(int score) {
 
     // Se ainda houver espaço vazio no ranking
     for (int i = 0; i < TOP_SCORES; i++) {
-
         if (ranking[i].score == 0) {
             return 1;
         }

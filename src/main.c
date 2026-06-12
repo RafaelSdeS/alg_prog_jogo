@@ -44,6 +44,7 @@ int main() {
 
         // Tela de gameover
         else if (currentScreen == GAMEOVER) {
+            // Lógica para entrar na tela para colocar o nome no ranking
             if (IsKeyPressed(KEY_ENTER)) {
                 if (IsTopScore(game.score)) {
 
@@ -58,6 +59,7 @@ int main() {
 
         // Tela de vitória
         else if (currentScreen == WINSCREEN) {
+            // Lógica para entrar na tela para colocar o nome no ranking
             if (IsKeyPressed(KEY_ENTER)) {
                 if (IsTopScore(game.score)) {
 
