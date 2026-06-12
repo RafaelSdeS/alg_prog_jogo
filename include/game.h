@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "game.h"
 #include "game_state.h"
 #include "config.h"
 
@@ -42,9 +41,13 @@ void DrawGame(Game *game);
 // Carregar nível atual e passar de fase
 void LoadCurrentLevel(Game *game, GameState *currentScreen);
 
-// Telas finais
+// Desenhar tela de game over
 void DrawGameOverScreen(Game *game);
+
+// Desenhar tela de vitória
 void DrawWinScreen(Game *game);
+
+// Desenhar tela para inserir nome
 void DrawEnterNameScreen(Game *game);
 
 #endif

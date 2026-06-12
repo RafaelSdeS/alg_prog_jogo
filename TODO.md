@@ -25,7 +25,7 @@ Felipe
 - [ X ] Criar matriz de tijolos
 - [ X ] Ler fases de arquivo `.txt`
 - [ X ] Renderizar tijolos
-- [ X ] Implementar colisão bola ↔ tijolo
+- [ X ] Implementar colisão entre bola e tijolo
 - [ X ] Implementar destruição dos tijolos
 - [ X ] Implementar resistência dos tijolos
 - [ X ] Implementar tijolos indestrutíveis
