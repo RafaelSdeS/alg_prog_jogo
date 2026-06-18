@@ -1,6 +1,6 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-#include "config.h"
+#include "..\include\config.h"
 
 // Carregar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename);

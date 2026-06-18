@@ -2,11 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "menu.h"
-#include "game.h"
-#include "save.h"
-#include "ranking.h"
-#include "game_state.h"
+#include "..\include\menu.h"
+#include "..\include\game.h"
+#include "..\include\save.h"
+#include "..\include\ranking.h"
+#include "..\include\game_state.h"
+#include "..\include\PowerUp.h"
 
 int main() {
 
@@ -21,20 +22,21 @@ int main() {
     // Estado do jogo
     Game game;
     GameState currentScreen = MENU;
+    PowerUp powerUps[MAX_POWERUPS] = {0};
 
     // Inicializar o jogo no menu
-    InitGame(&game, &currentScreen);
+    InitGame(&game, &currentScreen, powerUps);
 
     while (!WindowShouldClose()) {
 
         // Lógica de seleção do menu
         if (currentScreen == MENU) {
-            UpdateMenu(&game, &currentScreen);
+            UpdateMenu(&game, &currentScreen, powerUps);
         }
 
         // Selecionar para começar o jogo
         else if (currentScreen == GAME) {
-            UpdateGame(&game, &currentScreen);
+            UpdateGame(&game, &currentScreen, powerUps);
 
             // ESC volta para o menu
             if (IsKeyPressed(KEY_ESCAPE)) {

@@ -1,7 +1,7 @@
 #ifndef SAVE_H
 #define SAVE_H
 
-#include "game.h"
+#include "..\include\game.h"
 #include "game_state.h"
 
 #define MAX_SAVES 20

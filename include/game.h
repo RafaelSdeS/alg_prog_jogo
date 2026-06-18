@@ -1,12 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "game.h"
-#include "game_state.h"
-#include "config.h"
+#include "..\include\game.h"
+#include "..\include\game_state.h"
+#include "..\include\config.h"
+#include "..\include\level.h"
+#include "..\include\PowerUp.h"
 
 // Struct para salvar os dados atuais do jogo
-typedef struct {
+typedef struct Game {
     // Bola
     float ballX, ballY;
     float ballSpeedX, ballSpeedY;
@@ -31,10 +33,10 @@ typedef struct {
 } Game;
 
 // Inicializar o jogo
-void InitGame(Game *game, GameState *currentScreen);
+void InitGame(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]);
 
 // Atualizar o jogo (60 fps; cuida da lógica)
-void UpdateGame(Game *game, GameState *currentScreen);
+void UpdateGame(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]);
 
 // Desenhar o jogo (cuida apenas do visual, lógica fica em UpdateGame)
 void DrawGame(Game *game);

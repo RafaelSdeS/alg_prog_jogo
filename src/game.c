@@ -1,9 +1,12 @@
 #include <raylib.h>
 
-#include "game.h"
-#include "level.h"
-#include "save.h"
-#include "game_state.h"
+#include "..\include\game.h"
+#include "..\include\level.h"
+#include "..\include\save.h"
+#include "..\include\game_state.h"
+#include "..\include\PowerUp.h"
+
+  
 
 // Carregar o nível atual
 void LoadCurrentLevel(Game *game, GameState *currentScreen) {
@@ -58,7 +61,7 @@ void ResetPositions(Game *game) {
 }
 
 // Inicializar jogo
-void InitGame(Game *game, GameState *currentScreen) {
+void InitGame(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]) {
 
     game->playerName[0] = '\0';
 
@@ -75,13 +78,23 @@ void InitGame(Game *game, GameState *currentScreen) {
     game->paddleX = 350;
     game->paddleY = 550;
 
+    for(int i = 0; i < MAX_POWERUPS; i++) {
+        powerUps[i].active = 0;
+        powerUps[i].duracao = 0;
+        powerUps[i].type = 0;
+        powerUps[i].x = 0;
+        powerUps[i].y = 0;
+    }
+
     ResetBall(game);
 
     LoadCurrentLevel(game, currentScreen);
 }
 
 // Atualizar jogo
-void UpdateGame(Game *game, GameState *currentScreen) {
+void UpdateGame(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]) {
+
+ 
 
     game->ballX += game->ballSpeedX;
     game->ballY += game->ballSpeedY;
@@ -92,7 +105,7 @@ void UpdateGame(Game *game, GameState *currentScreen) {
 
         game->ballSpeedX *= -1;
     }
-
+    //colisao com teto
     if (game->ballY <= game->ballRadius) {
         game->ballSpeedY *= -1;
     }
@@ -123,6 +136,8 @@ void UpdateGame(Game *game, GameState *currentScreen) {
             if (brick == '1') {
                 game->level[row][col] = '0';
                 game->score += 100;
+                SpawnPowerUp(powerUps, row, col);
+                
             }
 
             else if (brick == '2') {
@@ -160,11 +175,17 @@ void UpdateGame(Game *game, GameState *currentScreen) {
                 else {
                     game->ballX = brickX - game->ballRadius;
                 }
-            }
+            }            
 
             return;
         }
     }
+    for(int i = 0; i < MAX_POWERUPS; i++) {
+                if (powerUps[i].active) {
+                    UpdatePowerUp(&powerUps[i], game);
+                }
+            }
+    DrawPowerUp(powerUps);
 
     // Movimento da plataforma
     if (IsKeyDown(KEY_RIGHT)) {
@@ -198,12 +219,15 @@ void UpdateGame(Game *game, GameState *currentScreen) {
         game->ballSpeedY *= -1;
         game->ballY = game->paddleY - game->ballRadius;
     }
+    //colisao plataforma com powerup
+    CheckPowerUpCollision(powerUps, game);
 
     // Bola caiu
     if (game->ballY > 600) {
         game->lives--;
         ResetBall(game);
     }
+    
 
     // Derrota
     if (game->lives <= 0) {

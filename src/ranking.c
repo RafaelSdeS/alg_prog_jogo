@@ -2,7 +2,7 @@
 #include <string.h>
 #include <raylib.h>
 
-#include "ranking.h"
+#include "..\include\ranking.h"
 
 // Carregar ranking do arquivo
 void LoadRanking(RankingEntry ranking[]) {

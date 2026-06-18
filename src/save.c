@@ -4,9 +4,9 @@
 #include <dirent.h>
 #include <raylib.h>
 
-#include "game.h"
-#include "save.h"
-#include "game_state.h"
+#include "..\include\game.h"
+#include "..\include\save.h"
+#include "..\include\game_state.h"
 
 // Número de saves visíveis na tela a qualquer momento (limite da paginação)
 #define VISIBLE_SAVES 6
