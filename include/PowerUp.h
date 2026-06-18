@@ -26,5 +26,4 @@ void CheckPowerUpCollision(PowerUp powerUps[MAX_POWERUPS], Game *game);
 void AtivaPowerUp(PowerUp *powerUp, Game *game);
 int SorteioPowerUps();
 
-
 #endif
