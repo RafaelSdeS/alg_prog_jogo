@@ -1,6 +1,23 @@
-#include "level.h"
-#include <stdio.h>
+/*
+ * Sistema de carregamento, representação e renderização de níveis.
+ *
+ * Responsável por:
+ * - Leitura de arquivos de fase e preenchimento da matriz de level (LoadLevel)
+ * - Conversão de símbolos de bloco em cores para renderização (GetBrickColor)
+ * - Desenho da grade de blocos na tela (DrawLevel)
+ * - Controle de progressão de fases baseado no estado do jogo (LoadCurrentLevel)
+ *
+ * Este módulo abstrai completamente a representação do nível como uma matriz de chars,
+ * permitindo que outros sistemas (colisão, score, powerups) operem sobre o level.
+ */
+
 #include <raylib.h>
+#include <stdio.h>
+
+#include "level.h"
+#include "game.h"
+#include "brick.h"
+#include "audio.h"
 
 // Lógica para preencher a matriz que irá gerar o nível
 void LoadLevel(char level[ROWS][COLS], char *filename) {
@@ -71,5 +88,29 @@ void DrawLevel(char level[ROWS][COLS]) {
                 DrawRectangle(x, y, brickWidth, brickHeight, color);
             }
         }
+    }
+}
+
+// Carrega o nível atual baseado no progresso do jogo
+void LoadCurrentLevel(Game *game, GameState *currentScreen) {
+
+    if (game->currentLevel == 1) {
+        LoadLevel(game->level, "fases/fase1.txt");
+        PrepareLevelPowerUps(game);
+    }
+
+    else if (game->currentLevel == 2) {
+        LoadLevel(game->level, "fases/fase2.txt");
+        PrepareLevelPowerUps(game);
+    }
+
+    else if (game->currentLevel == 3) {
+        LoadLevel(game->level, "fases/fase3.txt");
+        PrepareLevelPowerUps(game);
+    }
+
+    else {
+        PlayVictorySound();
+        *currentScreen = WINSCREEN;
     }
 }

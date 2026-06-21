@@ -1,3 +1,20 @@
+/*
+ * Sistema de persistência de saves e seleção de arquivos.
+ *
+ * Responsável por:
+ * - Listagem de arquivos de save no diretório (RefreshSaveList)
+ * - Serialização e gravação do estado completo do jogo em disco (SaveGame)
+ * - Deserialização e carregamento do estado do jogo (LoadGame)
+ * - Interface de seleção de saves com navegação e paginação
+ * - Renderização da tela de seleção de saves (DrawSaveSelection)
+ *
+ * Este módulo encapsula toda a lógica de persistência do estado do jogo,
+ * incluindo interação com sistema de arquivos e UI associada.
+ *
+ * O estado salvo é um dump direto da struct Game, permitindo restauração
+ * completa do jogo em um ponto anterior.
+ */
+
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
@@ -21,41 +38,55 @@ int firstVisibleSave = 0;
 // Atualizar lista de saves
 void RefreshSaveList() {
 
+    // Reseta estado da lista de saves
     saveCount = 0;
     selectedSave = 0;
     firstVisibleSave = 0;
 
-    // Abrir diretório de saves
+    // Abre o diretório onde os arquivos de save estão armazenados
     DIR *dir = opendir("saves");
 
+    // Se o diretório não existir ou não puder ser acessado, encerra a função
     if (dir == NULL) {
         return;
     }
 
-    // Arquivo atual que está sendo lido da pasta
+    // Estrutura usada para representar cada entrada (arquivo/pasta) do diretório
     struct dirent *entry;
 
-    // Carregar arquivos de save
+    // Percorre todas as entradas do diretório
     while ((entry = readdir(dir)) != NULL) {
+
+        // Filtra apenas arquivos de save com extensão ".dat"
         if (strstr(entry->d_name, ".dat") != NULL) {
+
+            // Copia o nome do arquivo para o array de saves
             strcpy(saveFiles[saveCount], entry->d_name);
+
+            // Incrementa contador de saves encontrados
             saveCount++;
 
+            // Evita ultrapassar o limite máximo de saves suportados
             if (saveCount >= MAX_SAVES) {
                 break;
             }
         }
     }
 
+    // Fecha o diretório após a leitura
     closedir(dir);
 
-    // Ordena os saves em ordem decrescente (alfabética) pelo nome do arquivo
+    // Ordena os saves em ordem alfabética decrescente para ordenar de acordo com a data mais recente
     for (int i = 0; i < saveCount - 1; i++) {
         for (int j = i + 1; j < saveCount; j++) {
+
+            // Compara os nomes dos arquivos
             if (strcmp(saveFiles[i], saveFiles[j]) < 0) {
 
+                // Buffer temporário para troca de strings
                 char temp[256];
 
+                // Troca dos nomes dos arquivos
                 strcpy(temp, saveFiles[i]);
                 strcpy(saveFiles[i], saveFiles[j]);
                 strcpy(saveFiles[j], temp);
@@ -67,16 +98,28 @@ void RefreshSaveList() {
 // Salvar jogo
 void SaveGame(Game *game) {
 
+    // Estruturas usadas para gerar timestamp do arquivo de save
+    //https://en.cppreference.com/c/chrono/time_t
     time_t now;
+
+    // https://en.cppreference.com/c/chrono/tm
     struct tm *t;
+
+    // Buffer para nome do arquivo gerado
     char filename[128];
+
+    // Caminho completo do arquivo dentro da pasta de saves
     char path[300];
+
     FILE *file;
 
-    // Gerar nome com data/hora
+    // Tempo atual do sistema
     now = time(NULL);
+
+    // Converte o tempo para estrutura local (ano, mês, dia, hora, etc.)
     t = localtime(&now);
 
+    // Gera nome único baseado em data e hora
     sprintf(
         filename,
         "save_%04d-%02d-%02d_%02d-%02d-%02d.dat",
@@ -88,7 +131,7 @@ void SaveGame(Game *game) {
         t->tm_sec
     );
 
-    // Montar o nome completo do arquivo
+    // Monta caminho completo do arquivo dentro da pasta "saves"
     sprintf(path, "saves/%s", filename);
 
     file = fopen(path, "wb");
@@ -179,8 +222,21 @@ void DrawSaveSelection() {
         lastVisibleSave = saveCount;
     }
 
+    // Lógica para colocar a cor no save selecionado
     for (int i = firstVisibleSave; i < lastVisibleSave; i++) {
-        DrawText(saveFiles[i], 120, 180 + (i - firstVisibleSave) * 50, 30, i == selectedSave ? YELLOW : WHITE);
+
+        Color color;
+        if (i == selectedSave) {
+            color = YELLOW;
+        } else {
+            color = WHITE;
+        }
+
+        DrawText(saveFiles[i],
+                120,
+                180 + (i - firstVisibleSave) * 50,
+                30,
+                color);
     }
 
     // Indicador de saves acima
@@ -193,6 +249,7 @@ void DrawSaveSelection() {
         DrawText("v", 720, 500, 30, GRAY);
     }
 
+    // Se não encontrar saves
     if (saveCount == 0) {
         DrawText("NO SAVES FOUND", 250, 250, 30, RED);
     }
