@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+*.dwo
 
 # Kernel Module Compile Results
 *.mod*
@@ -51,7 +52,28 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# debug information files
-*.dwo
+# Doxygen documentation output
+html/
+latex/
+xml/
+man/
+docs/
+doxygen_sqlite3.db
+doxygen.log
 
-saves
+# Doxygen cache / intermediate files
+*.tmp
+*.cache
+
+# CMake / build directories (se usar)
+build/
+cmake-build-*/
+
+# IDE / editor folders (opcional, mas comum)
+.vscode/
+.idea/
+
+# Saves / runtime data
+saves/
+save/
+*.save

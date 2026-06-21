@@ -1,15 +1,38 @@
+/*
+ * Ponto de entrada do jogo (main loop).
+ *
+ * Responsável por:
+ * - Inicialização do Raylib
+ * - Criação e inicialização do estado global do jogo (Game)
+ * - Gerenciamento do fluxo de estados da aplicação (GameState)
+ * - Encaminhamento de input e atualização para módulos específicos (menu, game, save, ranking)
+ * - Controle do loop principal de execução (update + render)
+ * - Coordenação entre telas (MENU, GAME, GAMEOVER, WINSCREEN, etc.)
+ * - Processamento de input textual para entrada de nome do jogador
+ * - Inicialização e liberação de recursos globais (texturas, janela)
+ *
+ * Este arquivo atua como camada de orquestração de alto nível,
+ * sem conter lógica de gameplay direta, apenas roteamento entre sistemas.
+ */
+
 #include <raylib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
-#include "..\include\menu.h"
-#include "..\include\game.h"
-#include "..\include\save.h"
-#include "..\include\ranking.h"
-#include "..\include\game_state.h"
-#include "..\include\PowerUp.h"
+#include "menu.h"
+#include "game.h"
+#include "save.h"
+#include "ranking.h"
+#include "game_state.h"
+#include "power_up.h"
+#include "audio.h"
 
 int main() {
+
+    // Incialização do srand para definir a chance de conseguir um powerup
+    srand(time(NULL));
 
     // Inicializações do RayLib
     InitWindow(800, 600, "Brick Breaker");
@@ -22,12 +45,22 @@ int main() {
     // Estado do jogo
     Game game;
     GameState currentScreen = MENU;
+    // Inicilização da struct de powerups
     PowerUp powerUps[MAX_POWERUPS] = {0};
+
+    // Carrega as texturas dos powerups
+    LoadPowerUpTextures();
 
     // Inicializar o jogo no menu
     InitGame(&game, &currentScreen, powerUps);
 
+    // Inicializar audio
+    InitAudioSystem();
+
+    // Loop pirncipal do jogo
     while (!WindowShouldClose()) {
+
+        UpdateAudioSystem();
 
         // Lógica de seleção do menu
         if (currentScreen == MENU) {
@@ -119,9 +152,7 @@ int main() {
 
             // Confirma o nome e salva no ranking
             if (IsKeyPressed(KEY_ENTER) && strlen(game.playerName) > 0) {
-
                 UpdateRanking(game.playerName, game.score);
-
                 currentScreen = MENU;
             }
         }
@@ -137,7 +168,7 @@ int main() {
         }
 
         else if (currentScreen == GAME) {
-            DrawGame(&game);
+            DrawGame(&game, powerUps);
         }
 
         else if (currentScreen == GAMEOVER) {
@@ -163,6 +194,9 @@ int main() {
         EndDrawing();
     }
 
+    // Descarrega as texturas
+    UnloadPowerUpTextures();
+    UnloadAudioSystem();
     CloseWindow();
 
     return 0;

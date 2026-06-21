@@ -1,8 +1,18 @@
+/*
+ * Sistema de ranking do jogo.
+ *
+ * Responsável por:
+ * - Leitura e escrita do ranking persistente em arquivo (ranking.txt)
+ * - Inserção de novas pontuações com ordenação por score
+ * - Verificação de elegibilidade para o top ranking (IsTopScore)
+ * - Renderização da tela de ranking na interface
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <raylib.h>
 
-#include "..\include\ranking.h"
+#include "ranking.h"
 
 // Carregar ranking do arquivo
 void LoadRanking(RankingEntry ranking[]) {
@@ -22,6 +32,7 @@ void LoadRanking(RankingEntry ranking[]) {
 
 
     // Lê uma linha no formato "nome;score" e verifica se os 2 campos foram carregados
+    // https://www.geeksforgeeks.org/c/scansets-in-c/
     while (i < TOP_SCORES && fscanf(file,"%49[^;];%d\n", ranking[i].name, &ranking[i].score) == 2) {
         i++;
     }
@@ -56,17 +67,25 @@ void SaveRanking(RankingEntry ranking[]) {
 
 // Inserir uma nova pontuação no ranking
 void UpdateRanking(char *name, int score) {
+
+    // Array temporário com espaço extra para inserir o novo score
     RankingEntry ranking[TOP_SCORES + 1];
 
+    // Carrega ranking atual do arquivo
     LoadRanking(ranking);
 
+    // Insere novo jogador na última posição do array temporário
     strcpy(ranking[TOP_SCORES].name, name);
     ranking[TOP_SCORES].score = score;
 
     // Ordenar do maior para o menor score
     for (int i = 0; i < TOP_SCORES; i++) {
         for (int j = i + 1; j < TOP_SCORES + 1; j++) {
+
+            // Se encontrar um score maior, troca as posições
             if (ranking[j].score > ranking[i].score) {
+
+                // Swap entre duas entradas do ranking
                 RankingEntry temp = ranking[i];
 
                 ranking[i] = ranking[j];
@@ -75,6 +94,7 @@ void UpdateRanking(char *name, int score) {
         }
     }
 
+    // Salva novamente apenas os TOP_SCORES melhores
     SaveRanking(ranking);
 }
 
@@ -95,27 +115,4 @@ int IsTopScore(int score) {
 
     // Compara com o último colocado
     return score > ranking[TOP_SCORES - 1].score;
-}
-
-// Desenhar tela de ranking
-void DrawRanking() {
-    RankingEntry ranking[TOP_SCORES];
-
-    LoadRanking(ranking);
-
-    DrawText("TOP 5 SCORES", 220, 80, 40, WHITE);
-
-    for (int i = 0; i < TOP_SCORES; i++) {
-
-        // Lógica para exibir o nome ou apenas uma linha tracejada caso o arquivo de ranking não esteja completo
-        DrawText(
-            TextFormat(
-                "%d. %s - %d",
-                i + 1,
-                ranking[i].name[0] != '\0' ? ranking[i].name : "---",
-                ranking[i].score
-            ), 180, 180 + i * 50, 30, WHITE);
-    }
-
-    DrawText("ESC - Voltar", 250, 500, 25, GRAY);
 }

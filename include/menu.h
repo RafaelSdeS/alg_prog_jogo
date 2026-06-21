@@ -1,9 +1,9 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "..\include\game.h"
-#include "..\include\game_state.h"
-#include "..\include\PowerUp.h"
+#include "game.h"
+#include "game_state.h"
+#include "power_up.h"
 
 // Desenhar o menu
 void DrawMenu();

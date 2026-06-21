@@ -1,14 +1,29 @@
+/*
+ * Sistema de menu principal do jogo.
+ *
+ * Responsável por:
+ * - Controle de navegação entre opções do menu (input UP/DOWN)
+ * - Gerenciamento de estado de seleção (selectedOption)
+ * - Transição entre telas do jogo (GAME, SELECTSAVE, RANKING, saída)
+ * - Inicialização de novo jogo via InitGame
+ * - Integração com sistema de saves e ranking
+ * - Renderização da interface do menu principal
+ *
+ * Este módulo funciona como camada de entrada da aplicação,
+ * direcionando o fluxo para os demais subsistemas do jogo.
+ */
+
 #include <raylib.h>
-#include "..\include\menu.h"
-#include "..\include\game.h"
-#include "..\include\save.h"
 #include <stdio.h>
 
-#include "..\include\game_state.h"
+#include "menu.h"
+#include "game.h"
+#include "save.h"
+#include "game_state.h"
 
 int selectedOption = 0;
 
-// Lógica de seleção do menu - Menu "rotaciona" entre as opções
+// Lógica de seleção do menu
 void UpdateMenu(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]) {
 
     if (IsKeyPressed(KEY_DOWN)) {
@@ -19,6 +34,7 @@ void UpdateMenu(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWER
         selectedOption--;
     }
 
+    // Menu rotaciona entre as opções
     if (selectedOption < 0) {
         selectedOption = 3;
     }
@@ -27,9 +43,11 @@ void UpdateMenu(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWER
         selectedOption = 0;
     }
 
+    // Seleções do menu
     if (IsKeyPressed(KEY_ENTER)) {
 
         if (selectedOption == 0) {
+            InitGame(game, currentScreen, powerUps);
             *currentScreen = GAME;
         }
 
