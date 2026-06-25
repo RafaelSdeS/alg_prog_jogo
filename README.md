@@ -9,6 +9,7 @@ O projeto foi desenvolvido em linguagem C utilizando a biblioteca gráfica Rayli
 Várias fontes foram pesquisadas para a construção do projeto, dentre elas StackOverflow, GeeksForGeeks, as documentações oficiais do RayLib e do próprio C. Toda funcionalidade não vista em aula teve a sua origem referenciada diretamente no código.
 
 A música e efeitos sonoros foram retirados de sites com linceça gratuita para uso. Créditos aos criadores:
+
 - wyver9 — https://opengameart.org/content/arcade-level-tracks-8-bitchiptune
 - ReyDros — https://freesound.org/s/327054/
 - 0new4y — https://opengameart.org/content/game-over-trumpet-sfx
@@ -42,19 +43,19 @@ A música e efeitos sonoros foram retirados de sites com linceça gratuita para 
 
 ## Organização dos Módulos
 
-| Módulo | Responsabilidade |
-|---------|------------------|
-| `main.c` / `game_core.c` / `game_core.h` | Inicialização da aplicação, utilitários e controle do loop principal |
-| `game_state.h` | Lógica central da partida e estados do jogo (Menu, Gameplay, Gameover) |
-| `ball.c` | Lógica, movimentação, propriedades físicas e vetores de velocidade da bola |
-| `brick.c` | Comportamento, resistência, renderização e tipos de blocos |
-| `power_up.c` | Gerenciamento, comportamento e aplicação dos efeitos dos powerups |
-| `level.c` | Leitura, interpretação de matrizes de arquivos externos e transição de fases |
-| `menu.c` | Interface, navegação e interações dos menus principais |
-| `ui.c` | Renderização da Interface de Usuário, HUD de jogo e textos |
-| `audio.c` | Inicialização do som, controle de efeitos sonoros e músicas |
-| `save.c` | Salvamento e carregamento de arquivos de save |
-| `ranking.c` | Leitura, ordenação e escrita do ranking de pontuações no disco |
+| Módulo                                   | Responsabilidade                                                             |
+| ---------------------------------------- | ---------------------------------------------------------------------------- |
+| `main.c` / `game_core.c` / `game_core.h` | Inicialização da aplicação, utilitários e controle do loop principal         |
+| `game_state.h`                           | Lógica central da partida e estados do jogo (Menu, Gameplay, Gameover)       |
+| `ball.c`                                 | Lógica, movimentação, propriedades físicas e vetores de velocidade da bola   |
+| `brick.c`                                | Comportamento, resistência, renderização e tipos de blocos                   |
+| `power_up.c`                             | Gerenciamento, comportamento e aplicação dos efeitos dos powerups            |
+| `level.c`                                | Leitura, interpretação de matrizes de arquivos externos e transição de fases |
+| `menu.c`                                 | Interface, navegação e interações dos menus principais                       |
+| `ui.c`                                   | Renderização da Interface de Usuário, HUD de jogo e textos                   |
+| `audio.c`                                | Inicialização do som, controle de efeitos sonoros e músicas                  |
+| `save.c`                                 | Salvamento e carregamento de arquivos de save                                |
+| `ranking.c`                              | Leitura, ordenação e escrita do ranking de pontuações no disco               |
 
 ## Requisitos
 
@@ -80,18 +81,21 @@ Na raiz do projeto (onde está o `Doxyfile`), execute:
 ```bash
 doxygen Doxyfile
 ```
+
 A documentação gerada pode ser visualizadas no Linux usando os comandos:
 
 ```bash
 xdg-open html/index.html
 ```
-ou 
+
+ou
 
 ```bash
 cd latex
 make
 ```
-e em seguida:
+
+e em seguida, após a compilação:
 
 ```bash
 xdg-open refman.pdf
