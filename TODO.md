@@ -1,6 +1,7 @@
 # TODO
 
 ## 1. Estrutura Inicial
+
 - [ X ] Configurar Raylib
 - [ X ] Configurar compilação no VS Code
 - [ X ] Criar estrutura de pastas
@@ -10,6 +11,7 @@
 ---
 
 ## 2. Mecânicas Básicas
+
 - [ X ] Criar plataforma
 - [ X ] Implementar movimento da plataforma
 - [ X ] Criar bola
@@ -20,6 +22,7 @@
 ---
 
 ## 3. Sistema de Tijolos
+
 Felipe
 
 - [ X ] Criar matriz de tijolos
@@ -33,6 +36,7 @@ Felipe
 ---
 
 ## 4. Sistema de Fases
+
 Rafael
 
 - [ X ] Criar pelo menos 3 fases
@@ -43,6 +47,7 @@ Rafael
 ---
 
 ## 5. Sistema de Vidas e Score
+
 Rafael
 
 - [ X ] Implementar sistema de vidas
@@ -57,29 +62,33 @@ Rafael
 ---
 
 ## 6. Power-ups
+
 Felipe
 
-- [ ] Criar estrutura de power-up
-- [ ] Sortear power-ups aleatoriamente
-- [ ] Fazer power-up cair na tela
-- [ ] Detectar captura pela plataforma
+- [ X ] Criar estrutura de power-up
+- [ X ] Sortear power-ups aleatoriamente
+- [ X ] Fazer power-up cair na tela
+- [ X ] Detectar captura pela plataforma
 
 ### Obrigatórios
+
 Felipe
 
-- [ ] Expansão da plataforma
-- [ ] Bola de fogo
-- [ ] Bolas extras
+- [ X ] Expansão da plataforma
+- [ X ] Bola de fogo
+- [ X ] Bolas extras
 
 ---
 
 ## 7. Menus e Telas
+
 - [ X ] Criar menu inicial
 - [ X ] Criar tela de game over
 - [ X ] Criar tela de vitória
 - [ X ] Implementar navegação no menu
 
 ### Opções do menu
+
 Rafael
 
 - [ X ] Novo jogo
@@ -90,6 +99,7 @@ Rafael
 ---
 
 ## 8. Salvamento
+
 Rafael
 
 - [ X ] Salvar jogo em arquivo binário
@@ -102,20 +112,22 @@ Rafael
 # Extras
 
 ## Gameplay
+
 - [ ] Ângulos variáveis na plataforma
 - [ ] Controle por mouse
 - [ ] Bola acelerando com o tempo
 - [ ] Power-ups negativos
-- [ ] Vida extra
+- [ X ] Vida extra
 - [ ] Bola lenta / rápida
 - [ ] Tijolos especiais
 - [ ] Modo multiplayer
 - [ ] Modo Versus (Multiplayer)
 
 ## Interface
+
 - [ ] Tela de pause
 - [ ] Dificuldades selecionáveis
-- [ ] Efeitos sonoros
-- [ ] Música
+- [ X ] Efeitos sonoros
+- [ X ] Música
 - [ ] Transições entre fases
-- [ ]  Light e Dark Modes
+- [ ] Light e Dark Modes
