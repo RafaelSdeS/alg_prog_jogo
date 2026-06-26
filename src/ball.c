@@ -17,6 +17,7 @@
 
 #include "ball.h"
 #include "game.h"
+#include "brick.h"
 
 // Atualiza os campos principais da primeira bola ativa
 // Essa função mantém um "cache" de conveniência dentro da struct Game

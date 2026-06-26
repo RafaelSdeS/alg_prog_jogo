@@ -18,8 +18,10 @@
 
 #include "menu.h"
 #include "game.h"
+#include "game_core.h"
 #include "save.h"
 #include "game_state.h"
+#include "ui.h"
 
 int selectedOption = 0;
 

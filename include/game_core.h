@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "power_up.h"
+#include "game_state.h"
 
 // Inicializa estado completo do jogo
 void InitGame(Game *game, GameState *currentScreen, PowerUp powerUps[MAX_POWERUPS]);

@@ -22,12 +22,13 @@
 #include <stdlib.h>
 
 #include "menu.h"
-#include "game.h"
+#include "game_core.h"
 #include "save.h"
 #include "ranking.h"
 #include "game_state.h"
 #include "power_up.h"
 #include "audio.h"
+#include "ui.h"
 
 int main() {
 
@@ -45,6 +46,7 @@ int main() {
     // Estado do jogo
     Game game;
     GameState currentScreen = MENU;
+
     // Inicilização da struct de powerups
     PowerUp powerUps[MAX_POWERUPS] = {0};
 

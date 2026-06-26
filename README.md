@@ -71,6 +71,11 @@ A partir da raiz do projeto no Ubuntu/Linux, execute:
 gcc src/*.c -Iinclude -o bin/jogo \
 -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 ```
+e em seguida rode usando:
+
+```bash
+./bin/jogo
+```
 
 ## Geração da Documentação (Doxygen)
 

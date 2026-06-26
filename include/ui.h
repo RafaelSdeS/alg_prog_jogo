@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "power_up.h"
+#include "level.h"
 
 // Renderização principal do jogo (HUD + elementos visuais)
 void DrawGame(Game *game, PowerUp powerUps[MAX_POWERUPS]);
@@ -18,5 +19,8 @@ void DrawEnterNameScreen(Game *game);
 
 // Tela de ranking
 void DrawRanking(void);
+
+// Desenhar level
+void DrawLevel(char level[ROWS][COLS]);
 
 #endif
