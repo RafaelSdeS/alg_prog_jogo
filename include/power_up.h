@@ -36,12 +36,6 @@ typedef struct PowerUp {
 // Forward declaration da struct Game (evita dependência circular de header)
 typedef struct Game Game;
 
-// Instância global das texturas dos power-ups
-// Fica acessível em todo o sistema de power-ups
-// https://www.geeksforgeeks.org/c/understanding-extern-keyword-in-c/
-// https://stackoverflow.com/questions/496448/how-to-correctly-use-the-extern-keyword-in-c
-extern PowerUpTextures gPowerUpTextures;
-
 // Carrega todas as texturas dos power-ups
 void LoadPowerUpTextures(void);
 
