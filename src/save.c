@@ -18,6 +18,9 @@
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+
+// https://www.geeksforgeeks.org/c/c-program-list-files-sub-directories-directory/
+// https://net-informations.com/c/files/directories.htm
 #include <dirent.h>
 #include <raylib.h>
 
