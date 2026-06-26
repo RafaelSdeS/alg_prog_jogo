@@ -20,7 +20,7 @@
 #include "brick.h"
 
 // Atualiza os campos principais da primeira bola ativa
-// Essa função mantém um "cache" de conveniência dentro da struct Game
+// Essa função mantém um "cache" dentro da struct Game
 // para evitar precisar buscar a primeira bola ativa o tempo todo
 void SyncPrimaryBallFields(Game *game) {
 
@@ -132,7 +132,7 @@ void ResetBallSystem(Game *game) {
 }
 
 // Aplica multiplicador de velocidade em todas as bolas ativas
-// Usado por power-ups de speed e eventos globais de dificuldade
+// Usado por power-ups de speed
 void ApplyBallSpeedMultiplier(Game *game, float factor) {
 
     for (int i = 0; i < MAX_BALLS; i++) {
@@ -149,6 +149,34 @@ void ApplyBallSpeedMultiplier(Game *game, float factor) {
 
     // Atualiza cache da bola principal
     SyncPrimaryBallFields(game);
+}
+
+// Aumenta gradualmente a velocidade global das bolas ao longo do tempo
+void UpdateBallSpeedIncrease(Game *game) {
+
+    float maxSpeed = 0.0f;
+
+    for (int i = 0; i < MAX_BALLS; i++) {
+
+        if (!game->balls[i].active) {
+            continue;
+        }
+
+        float speed = sqrtf(
+            game->balls[i].speedX * game->balls[i].speedX +
+            game->balls[i].speedY * game->balls[i].speedY
+        );
+
+        if (speed > maxSpeed) {
+            maxSpeed = speed;
+        }
+    }
+
+    if (maxSpeed >= BALL_SPEED_MAX) {
+        return;
+    }
+
+    ApplyBallSpeedMultiplier(game, BALL_SPEED_INCREASE_FACTOR);
 }
 
 // Retornar valor absoluto
@@ -188,7 +216,6 @@ void ActivateMultiBall(Game *game) {
         newBall.y = templateBall->y - newBall.radius - 1.0f;
 
         // Define direção horizontal diferente para cada nova bola
-        // https://en.cppreference.com/c/numeric/math/fabs
         if (added == 0) {
             newBall.x = templateBall->x - 14.0f;
             newBall.speedX = -AbsoluteValue(templateBall->speedX) * 0.85f;
@@ -207,51 +234,6 @@ void ActivateMultiBall(Game *game) {
 
     // Atualiza contagem e sincroniza estado global
     game->ballCount = CountActiveBalls(game);
-    SyncPrimaryBallFields(game);
-}
-
-// Aumenta gradualmente a velocidade global das bolas ao longo do tempo
-// Mantém dificuldade crescente controlada por limite máximo
-void UpdateBallSpeedIncrease(Game *game) {
-
-    float maxSpeed = 0.0f;
-
-    // Calcula velocidade máxima atual entre todas as bolas ativas
-    for (int i = 0; i < MAX_BALLS; i++) {
-
-        if (!game->balls[i].active) {
-            continue;
-        }
-
-        // Calcula magnitude da velocidade (vetor 2D)
-        float speed = sqrtf(
-            game->balls[i].speedX * game->balls[i].speedX +
-            game->balls[i].speedY * game->balls[i].speedY
-        );
-
-        // Mantém maior velocidade encontrada
-        if (speed > maxSpeed) {
-            maxSpeed = speed;
-        }
-    }
-
-    // Se já atingiu limite máximo, não aplica mais aumento
-    if (maxSpeed >= BALL_SPEED_MAX) {
-        return;
-    }
-
-    // Aplica multiplicador de aumento em todas as bolas ativas
-    for (int i = 0; i < MAX_BALLS; i++) {
-
-        if (!game->balls[i].active) {
-            continue;
-        }
-
-        game->balls[i].speedX *= BALL_SPEED_INCREASE_FACTOR;
-        game->balls[i].speedY *= BALL_SPEED_INCREASE_FACTOR;
-    }
-
-    // Sincroniza estado global após alteração de velocidade
     SyncPrimaryBallFields(game);
 }
 

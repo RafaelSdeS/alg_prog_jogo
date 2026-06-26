@@ -70,7 +70,4 @@ void CheckPowerUpCollision(PowerUp powerUps[MAX_POWERUPS], Game *game);
 // Ativa o efeito de um power-up ao ser coletado
 void AtivaPowerUp(PowerUp *powerUp, Game *game);
 
-// Função de sorteio para decidir spawn de power-ups
-int SorteioPowerUps();
-
 #endif

@@ -17,9 +17,9 @@ int LoadGame(Game *game, const char *filename);
 void UpdateSaveSelection(Game *game, GameState *currentScreen);
 
 // Desenhar tela de saves
-void DrawSaveSelection();
+void DrawSaveSelection(void);
 
 // Atualizar lista de saves
-void RefreshSaveList();
+void RefreshSaveList(void);
 
 #endif

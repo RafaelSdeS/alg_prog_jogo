@@ -46,6 +46,7 @@ A música e efeitos sonoros foram retirados de sites com linceça gratuita para 
 | Módulo                                   | Responsabilidade                                                             |
 | ---------------------------------------- | ---------------------------------------------------------------------------- |
 | `main.c` / `game_core.c` / `game_core.h` | Inicialização da aplicação, utilitários e controle do loop principal         |
+| `game.h`                                 | Dados globais do jogo (bola, plataforma, level, powerups do nível, etc)      |
 | `game_state.h`                           | Lógica central da partida e estados do jogo (Menu, Gameplay, Gameover)       |
 | `ball.c`                                 | Lógica, movimentação, propriedades físicas e vetores de velocidade da bola   |
 | `brick.c`                                | Comportamento, resistência, renderização e tipos de blocos                   |

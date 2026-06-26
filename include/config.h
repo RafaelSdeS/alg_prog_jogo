@@ -29,7 +29,7 @@
 #define POWERUP_SPEED 1
 #define POWERUP_DURATION 10000
 #define PLATAFOROMAY 550
-#define POWERUPS_PER_LEVEL 20
+#define POWERUPS_PER_LEVEL 30
 
 // Incremento global da velocidade da bola
 #define BALL_SPEED_INCREASE_INTERVAL 5.0

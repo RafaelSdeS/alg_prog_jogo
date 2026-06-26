@@ -22,7 +22,7 @@
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
+# Shared objects
 *.dll
 *.so
 *.so.*
@@ -65,11 +65,11 @@ doxygen.log
 *.tmp
 *.cache
 
-# CMake / build directories (se usar)
+# CMake / build directories
 build/
 cmake-build-*/
 
-# IDE / editor folders (opcional, mas comum)
+# IDE / editor folders
 .vscode/
 .idea/
 

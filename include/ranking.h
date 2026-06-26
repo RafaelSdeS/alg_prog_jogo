@@ -24,6 +24,6 @@ void UpdateRanking(char *name, int score);
 int IsTopScore(int score);
 
 // Desenhar tela de ranking
-void DrawRanking();
+void DrawRanking(void);
 
 #endif
