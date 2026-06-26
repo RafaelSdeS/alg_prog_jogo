@@ -78,7 +78,6 @@ void InitPowerUps(PowerUp powerUps[MAX_POWERUPS]) {
         powerUps[i].type = 0;
         powerUps[i].x = 0;
         powerUps[i].y = 0;
-        powerUps[i].spawnTime = 0.0;
         powerUps[i].effectStartTime = 0.0;
     }
 }
@@ -145,7 +144,6 @@ void ResetActivePowerUps(PowerUp powerUps[MAX_POWERUPS]) {
         powerUps[i].collected = 0;
         powerUps[i].duracao = 0;
         powerUps[i].type = 0;
-        powerUps[i].spawnTime = 0.0;
         powerUps[i].effectStartTime = 0.0;
     }
 }

@@ -29,7 +29,6 @@ typedef struct PowerUp {
     int active;                 // Se está ativo no jogo (spawnado)
     int collected;              // Se já foi coletado pelo jogador
     float duracao;              // Duração do efeito (quando aplicável)
-    double spawnTime;           // Tempo em que o power-up foi criado
     double effectStartTime;     // Tempo em que o efeito foi ativado
     Texture2D texture;          // Textura específica do power-up
 } PowerUp;

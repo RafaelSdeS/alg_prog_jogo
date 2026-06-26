@@ -114,7 +114,6 @@ void SpawnPowerUp(PowerUp powerUps[MAX_POWERUPS], int row, int col, PowerUpType 
         powerUps[i].active = 1;
         powerUps[i].collected = 0;
         powerUps[i].duracao = 0;
-        powerUps[i].spawnTime = GetTime();
         powerUps[i].effectStartTime = 0.0;
 
         // Encerra a busca após criar o power-up
