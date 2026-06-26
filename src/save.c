@@ -98,31 +98,20 @@ void RefreshSaveList() {
 // Salvar jogo
 void SaveGame(Game *game) {
 
-    // Estruturas usadas para gerar timestamp do arquivo de save
-    //https://en.cppreference.com/c/chrono/time_t
-    time_t now;
+    // Estrutura usada para gerar timestamp do arquivo de save
+    // https://en.cppreference.com/c/chrono/time_t
+    time_t now = time(NULL);
 
     // https://en.cppreference.com/c/chrono/tm
-    struct tm *t;
-
-    // Buffer para nome do arquivo gerado
-    char filename[128];
+    struct tm *t = localtime(&now);
 
     // Caminho completo do arquivo dentro da pasta de saves
     char path[300];
 
-    FILE *file;
-
-    // Tempo atual do sistema
-    now = time(NULL);
-
-    // Converte o tempo para estrutura local (ano, mês, dia, hora, etc.)
-    t = localtime(&now);
-
-    // Gera nome único baseado em data e hora
+    // Gera o caminho completo do arquivo de save
     sprintf(
-        filename,
-        "save_%04d-%02d-%02d_%02d-%02d-%02d.dat",
+        path,
+        "saves/save_%04d-%02d-%02d_%02d-%02d-%02d.dat",
         t->tm_year + 1900,
         t->tm_mon + 1,
         t->tm_mday,
@@ -131,17 +120,18 @@ void SaveGame(Game *game) {
         t->tm_sec
     );
 
-    // Monta caminho completo do arquivo dentro da pasta "saves"
-    sprintf(path, "saves/%s", filename);
+    // Abre o arquivo para escrita em modo binário
+    FILE *file = fopen(path, "wb");
 
-    file = fopen(path, "wb");
-
+    // Encerra caso o arquivo não possa ser criado
     if (file == NULL) {
         return;
     }
 
+    // Escreve toda a estrutura Game no arquivo
     fwrite(game, sizeof(Game), 1, file);
 
+    // Fecha o arquivo após finalizar a gravação
     fclose(file);
 }
 
